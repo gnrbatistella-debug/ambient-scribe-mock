@@ -983,6 +983,24 @@ body {
   color: var(--text-muted);
 }
 
+.check-icon.loading {
+  color: var(--accent);
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(34, 197, 94, 0.25);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .check-icon.complete {
   color: var(--accent);
   font-size: 14px;
@@ -1002,11 +1020,61 @@ body {
 }
 
 .text-pending {
-  color: var(--danger);
+  color: var(--text-muted);
 }
 
 .text-complete {
   color: var(--text);
+}
+
+.scribe-text {
+  transition: color 0.3s;
+}
+
+/* Allergy badge in header */
+.allergy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--danger);
+  color: white;
+  border-radius: 20px;
+  animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.allergy-badge svg {
+  stroke: white;
+  flex-shrink: 0;
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* CDSS alert entrance animation */
+.cdss-alert-enter {
+  animation: alert-slide-in 0.5s ease-out;
+}
+
+@keyframes alert-slide-in {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Checklist item entrance */
+.checklist-item-enter {
+  animation: item-fade-in 0.35s ease-out;
+}
+
+@keyframes item-fade-in {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Notes & History */

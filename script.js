@@ -1,4 +1,4 @@
-/* Ambient Scribe Mock — Interactions + i18n */
+/* Ambient Scribe Mock — Interactions + i18n + Progressive Narrative Scribe */
 
 (function () {
   // ===== i18n Translation System =====
@@ -18,7 +18,7 @@
       medsLabel: 'Medicamentos em uso:',
       medsText: 'Losartana 50mg, AAS 100mg. Nega uso regular de AINEs.',
       diseasesLabel: 'Doenças prévias:',
-      diseasesText: 'Hipertensão, HAC. Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).',
+      diseasesText: 'Hipertensão, HAC. Alergia a contraste iodado (reação anafilactoide prévia). Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).',
       notesLabel: 'Notas:',
       notesPH: 'Escreva qualquer tipo de nota que tenha relevância na consulta',
       historyLabel: 'Histórico médico:',
@@ -126,7 +126,7 @@
       medsLabel: 'Current medications:',
       medsText: 'Losartan 50mg, ASA 100mg. Denies regular NSAID use.',
       diseasesLabel: 'Past medical history:',
-      diseasesText: 'Hypertension, chronic arterial hypertension. Note: MRI contraindicated — gunshot projectile in right shoulder from past accident, not removed (ferromagnetic).',
+      diseasesText: 'Hypertension, chronic arterial hypertension. Allergy to iodinated contrast (prior anaphylactoid reaction). Note: MRI contraindicated — gunshot projectile in right shoulder from past accident, not removed (ferromagnetic).',
       notesLabel: 'Notes:',
       notesPH: 'Write any notes relevant to the consultation',
       historyLabel: 'Medical history:',
@@ -234,7 +234,7 @@
       medsLabel: 'Medicamentos en uso:',
       medsText: 'Losartán 50mg, AAS 100mg. Niega uso regular de AINEs.',
       diseasesLabel: 'Enfermedades previas:',
-      diseasesText: 'Hipertensión, HTA crónica. Contraindicada RM de cráneo — proyectil de arma de fuego en hombro derecho, no removido (ferromagnético).',
+      diseasesText: 'Hipertensión, HTA crónica. Alergia al contraste yodado (reacción anafilactoide previa). Contraindicada RM de cráneo — proyectil de arma de fuego en hombro derecho, no removido (ferromagnético).',
       notesLabel: 'Notas:',
       notesPH: 'Escriba cualquier nota relevante para la consulta',
       historyLabel: 'Historial médico:',
@@ -349,15 +349,20 @@
   }
 
   // ===== Recording timer & controls =====
-  let recordingSeconds = 45;
+  let recordingSeconds = 0;
   let timerInterval = null;
   let isPaused = false;
+  let scribing = false;
+  let allergyAlertShown = false;
+  let scribeTimeouts = [];
 
   const recordBtn = document.getElementById('record-btn');
   const pauseBtn = document.getElementById('pause-btn');
   const continueBtn = document.getElementById('continue-btn');
   const stopBtn = document.getElementById('stop-btn');
   const headerTimer = document.getElementById('header-timer');
+  const cdssAlert = document.getElementById('cdss-alert');
+  const allergyBadge = document.getElementById('allergy-badge');
 
   function formatTime(sec) {
     const m = Math.floor(sec / 60);
@@ -379,13 +384,14 @@
       continueBtn.classList.add('hidden');
       stopBtn.classList.remove('hidden');
       if (!timerInterval) timerInterval = setInterval(tickTimer, 1000);
+      startProgressiveScribing();
     } else {
       recordBtn.classList.remove('recording');
       recordBtn.querySelector('.record-label').textContent = t('record');
       recordBtn.style.display = 'inline-flex';
       pauseBtn.classList.add('hidden');
       continueBtn.classList.add('hidden');
-      stopBtn.classList.add('hidden');
+      stopBtn.classList.remove('hidden');
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
     }
   }
@@ -407,27 +413,142 @@
     pauseBtn.classList.remove('hidden');
   });
 
-  // ===== Checklist auto-progression =====
-  const sectionOrder = ['chief', 'hpi', 'meds', 'diseases'];
-  let currentSectionIdx = 0;
+  // ===== Finalize Button =====
+  document.querySelector('.btn-finalize')?.addEventListener('click', () => {
+    // Stop recording
+    setRecordingState(false);
+    stopBtn.classList.add('hidden');
 
-  function completeSection(sectionKey) {
-    const item = document.querySelector(`.checklist-item[data-section="${sectionKey}"]`);
-    if (!item) return;
-    const icon = item.querySelector('.check-icon');
-    const text = item.querySelector('.text-pending');
-    if (icon && text) {
-      icon.classList.remove('pending');
-      icon.classList.add('complete');
-      icon.textContent = '✓';
-      text.classList.remove('text-pending');
-      text.classList.add('text-complete');
-    }
+    // Convert all spinners to checkmarks
+    document.querySelectorAll('.checklist-item').forEach(item => {
+      const checkIcon = item.querySelector('.check-icon');
+      if (checkIcon) {
+        checkIcon.classList.remove('loading', 'pending');
+        checkIcon.classList.add('complete');
+        checkIcon.innerHTML = '\u2713';
+      }
+      const textSpan = item.querySelector('.scribe-text');
+      if (textSpan) {
+        textSpan.classList.remove('text-pending');
+        textSpan.classList.add('text-complete');
+      }
+    });
+
+    // Clear pending scribe timeouts
+    scribeTimeouts.forEach(id => clearTimeout(id));
+    scribeTimeouts = [];
+    scribing = false;
+  });
+
+  // ===== Progressive Scribe System =====
+  function startProgressiveScribing() {
+    if (scribing) return;
+    scribing = true;
+    allergyAlertShown = false;
+
+    const scribePlan = [
+      { section: 'chief', delay: 2000 },
+      { section: 'hpi', delay: 8000 },
+      { section: 'meds', delay: 12000 },
+      { section: 'diseases', delay: 17000 }
+    ];
+
+    scribePlan.forEach(plan => {
+      const tid = setTimeout(() => scribeSection(plan.section), plan.delay);
+      scribeTimeouts.push(tid);
+    });
   }
 
-  [8000, 16000, 24000, 32000].forEach((delay, idx) => {
-    setTimeout(() => completeSection(sectionOrder[idx]), delay);
-  });
+  function scribeSection(sectionKey) {
+    const text = t(sectionKey + 'Text');
+    const item = document.querySelector(`.checklist-item[data-section="${sectionKey}"]`);
+    if (!item) return;
+
+    // Reveal the item with animation
+    item.classList.remove('hidden');
+    item.classList.add('checklist-item-enter');
+
+    // Ensure spinner is showing
+    const checkIcon = item.querySelector('.check-icon');
+    if (checkIcon) {
+      checkIcon.classList.add('loading');
+      checkIcon.classList.remove('pending');
+      if (!checkIcon.querySelector('.spinner')) {
+        checkIcon.innerHTML = '<span class="spinner"></span>';
+      }
+    }
+
+    // Update the label in case language changed
+    const strong = item.querySelector('strong');
+    if (strong) strong.textContent = t(sectionKey + 'Label');
+
+    // Get text span and type word by word
+    const textSpan = item.querySelector('.scribe-text');
+    if (!textSpan) return;
+    textSpan.textContent = '';
+
+    typeWordByWord(textSpan, text, sectionKey);
+  }
+
+  function typeWordByWord(element, fullText, sectionKey) {
+    const words = fullText.split(' ');
+    let currentIndex = 0;
+    let allergyTriggered = false;
+
+    function typeNextWord() {
+      if (currentIndex >= words.length || !scribing) {
+        element.textContent = fullText;
+        return;
+      }
+
+      const word = words[currentIndex];
+      element.textContent += (currentIndex > 0 ? ' ' : '') + word;
+      currentIndex++;
+
+      // Check if we just typed the allergy trigger word in diseases section
+      if (sectionKey === 'diseases' && !allergyTriggered) {
+        const lower = word.toLowerCase();
+        if (lower.startsWith('alergia') || lower.startsWith('allergy')) {
+          allergyTriggered = true;
+          scheduleCDSSAlert();
+        }
+      }
+
+      // Calculate delay for next word
+      let nextDelay = 180 + (Math.random() - 0.5) * 160;
+
+      if (word.endsWith('.')) {
+        nextDelay += 600;
+      } else if (word.endsWith(',') || word.endsWith(';') || word.endsWith(':')) {
+        nextDelay += 300;
+      } else if (word.endsWith(')')) {
+        nextDelay += 200;
+      }
+
+      const tid = setTimeout(typeNextWord, nextDelay);
+      scribeTimeouts.push(tid);
+    }
+
+    typeNextWord();
+  }
+
+  function scheduleCDSSAlert() {
+    if (allergyAlertShown) return;
+    allergyAlertShown = true;
+
+    const tid = setTimeout(() => {
+      if (cdssAlert) {
+        cdssAlert.classList.remove('hidden');
+        cdssAlert.classList.add('cdss-alert-enter');
+      }
+      if (allergyBadge) {
+        allergyBadge.classList.remove('hidden');
+      }
+      const chatMsgs = document.getElementById('chat-messages');
+      if (chatMsgs) chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    }, 5000);
+    scribeTimeouts.push(tid);
+  }
 
   // ===== Chat flow =====
   const chatMessages = document.getElementById('chat-messages');
@@ -1061,6 +1182,7 @@
       renderArticleSummary(false);
     }
   }
+
 
   // ===== Auto-start recording on load =====
   setTimeout(() => setRecordingState(true), 1500);

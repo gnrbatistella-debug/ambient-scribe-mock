@@ -15,7 +15,7 @@
       <div class="header-left">
         <h1 class="consult-type">Consulta Geral Adulto</h1>
         <div class="record-controls">
-          <span class="timer" id="header-timer">00:45</span>
+          <span class="timer" id="header-timer">00:00</span>
           <button class="btn-record-header" id="record-btn" title="Gravar">
             <span class="record-dot"></span>
             <span class="record-label">Gravar</span>
@@ -32,6 +32,14 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
             Parar
           </button>
+          <span class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Alergia
+          </span>
         </div>
       </div>
       <div class="header-right">
@@ -80,32 +88,32 @@
         <div class="checklist-container">
           <h3 class="checklist-title">Template da consulta</h3>
           <ul class="checklist">
-            <li class="checklist-item" data-section="chief">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="chief">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Queixa principal:</strong>
-                <span class="text-pending">Cefaleia de início súbito há 3 dias, com sinais de alarme (rigidez de nuca, fotofobia).</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="hpi">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="hpi">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>História da doença atual:</strong>
-                <span class="text-pending">Paciente relata cefaleia em trovoada. Sem trauma. Negou febre inicialmente, mas evoluiu com náuseas. Suspeita de hemorragia subaracnóidea. Solicitado TC de crânio com contraste para melhor caracterização.</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="meds">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="meds">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Medicamentos em uso:</strong>
-                <span class="text-pending">Losartana 50mg, AAS 100mg. Nega uso regular de AINEs.</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="diseases">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="diseases">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Doenças prévias:</strong>
-                <span class="text-pending">Hipertensão, HAC. Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
           </ul>
@@ -446,7 +454,7 @@
         <!-- Chat view -->
         <div class="chat-view" id="chat-view">
         <div class="chat-messages" id="chat-messages">
-          <div class="msg msg-assistant msg-alert" data-msg="allergy">
+          <div class="msg msg-assistant msg-alert hidden" id="cdss-alert" data-msg="allergy">
             <div class="alert-icon-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>

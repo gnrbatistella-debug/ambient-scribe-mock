@@ -990,6 +990,24 @@ body {
   color: var(--text-muted);
 }
 
+.check-icon.loading {
+  color: var(--accent);
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(34, 197, 94, 0.25);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .check-icon.complete {
   color: var(--accent);
   font-size: 14px;
@@ -1009,11 +1027,61 @@ body {
 }
 
 .text-pending {
-  color: var(--danger);
+  color: var(--text-muted);
 }
 
 .text-complete {
   color: var(--text);
+}
+
+.scribe-text {
+  transition: color 0.3s;
+}
+
+/* Allergy badge in header */
+.allergy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--danger);
+  color: white;
+  border-radius: 20px;
+  animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.allergy-badge svg {
+  stroke: white;
+  flex-shrink: 0;
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* CDSS alert entrance animation */
+.cdss-alert-enter {
+  animation: alert-slide-in 0.5s ease-out;
+}
+
+@keyframes alert-slide-in {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Checklist item entrance */
+.checklist-item-enter {
+  animation: item-fade-in 0.35s ease-out;
+}
+
+@keyframes item-fade-in {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Notes & History */
@@ -1924,7 +1992,7 @@ body {
       <div class="header-left">
         <h1 class="consult-type">Consulta Geral Adulto</h1>
         <div class="record-controls">
-          <span class="timer" id="header-timer">00:45</span>
+          <span class="timer" id="header-timer">00:00</span>
           <button class="btn-record-header" id="record-btn" title="Gravar">
             <span class="record-dot"></span>
             <span class="record-label">Gravar</span>
@@ -1941,6 +2009,14 @@ body {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
             Parar
           </button>
+          <span class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            Alergia
+          </span>
         </div>
       </div>
       <div class="header-right">
@@ -1989,32 +2065,32 @@ body {
         <div class="checklist-container">
           <h3 class="checklist-title">Template da consulta</h3>
           <ul class="checklist">
-            <li class="checklist-item" data-section="chief">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="chief">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Queixa principal:</strong>
-                <span class="text-pending">Cefaleia de início súbito há 3 dias, com sinais de alarme (rigidez de nuca, fotofobia).</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="hpi">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="hpi">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>História da doença atual:</strong>
-                <span class="text-pending">Paciente relata cefaleia em trovoada. Sem trauma. Negou febre inicialmente, mas evoluiu com náuseas. Suspeita de hemorragia subaracnóidea. Solicitado TC de crânio com contraste para melhor caracterização.</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="meds">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="meds">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Medicamentos em uso:</strong>
-                <span class="text-pending">Losartana 50mg, AAS 100mg. Nega uso regular de AINEs.</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
-            <li class="checklist-item" data-section="diseases">
-              <span class="check-icon pending">○</span>
+            <li class="checklist-item hidden" data-section="diseases">
+              <span class="check-icon loading"><span class="spinner"></span></span>
               <div class="check-content">
                 <strong>Doenças prévias:</strong>
-                <span class="text-pending">Hipertensão, HAC. Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).</span>
+                <span class="text-pending scribe-text"></span>
               </div>
             </li>
           </ul>
@@ -2355,7 +2431,7 @@ body {
         <!-- Chat view -->
         <div class="chat-view" id="chat-view">
         <div class="chat-messages" id="chat-messages">
-          <div class="msg msg-assistant msg-alert" data-msg="allergy">
+          <div class="msg msg-assistant msg-alert hidden" id="cdss-alert" data-msg="allergy">
             <div class="alert-icon-wrap">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
@@ -2477,7 +2553,7 @@ body {
   </div>
 
   <script>
-/* Ambient Scribe Mock — Interactions + i18n */
+/* Ambient Scribe Mock — Interactions + i18n + Progressive Narrative Scribe */
 
 (function () {
   // ===== i18n Translation System =====
@@ -2497,7 +2573,7 @@ body {
       medsLabel: 'Medicamentos em uso:',
       medsText: 'Losartana 50mg, AAS 100mg. Nega uso regular de AINEs.',
       diseasesLabel: 'Doenças prévias:',
-      diseasesText: 'Hipertensão, HAC. Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).',
+      diseasesText: 'Hipertensão, HAC. Alergia a contraste iodado (reação anafilactoide prévia). Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).',
       notesLabel: 'Notas:',
       notesPH: 'Escreva qualquer tipo de nota que tenha relevância na consulta',
       historyLabel: 'Histórico médico:',
@@ -2605,7 +2681,7 @@ body {
       medsLabel: 'Current medications:',
       medsText: 'Losartan 50mg, ASA 100mg. Denies regular NSAID use.',
       diseasesLabel: 'Past medical history:',
-      diseasesText: 'Hypertension, chronic arterial hypertension. Note: MRI contraindicated — gunshot projectile in right shoulder from past accident, not removed (ferromagnetic).',
+      diseasesText: 'Hypertension, chronic arterial hypertension. Allergy to iodinated contrast (prior anaphylactoid reaction). Note: MRI contraindicated — gunshot projectile in right shoulder from past accident, not removed (ferromagnetic).',
       notesLabel: 'Notes:',
       notesPH: 'Write any notes relevant to the consultation',
       historyLabel: 'Medical history:',
@@ -2713,7 +2789,7 @@ body {
       medsLabel: 'Medicamentos en uso:',
       medsText: 'Losartán 50mg, AAS 100mg. Niega uso regular de AINEs.',
       diseasesLabel: 'Enfermedades previas:',
-      diseasesText: 'Hipertensión, HTA crónica. Contraindicada RM de cráneo — proyectil de arma de fuego en hombro derecho, no removido (ferromagnético).',
+      diseasesText: 'Hipertensión, HTA crónica. Alergia al contraste yodado (reacción anafilactoide previa). Contraindicada RM de cráneo — proyectil de arma de fuego en hombro derecho, no removido (ferromagnético).',
       notesLabel: 'Notas:',
       notesPH: 'Escriba cualquier nota relevante para la consulta',
       historyLabel: 'Historial médico:',
@@ -2828,15 +2904,20 @@ body {
   }
 
   // ===== Recording timer & controls =====
-  let recordingSeconds = 45;
+  let recordingSeconds = 0;
   let timerInterval = null;
   let isPaused = false;
+  let scribing = false;
+  let allergyAlertShown = false;
+  let scribeTimeouts = [];
 
   const recordBtn = document.getElementById('record-btn');
   const pauseBtn = document.getElementById('pause-btn');
   const continueBtn = document.getElementById('continue-btn');
   const stopBtn = document.getElementById('stop-btn');
   const headerTimer = document.getElementById('header-timer');
+  const cdssAlert = document.getElementById('cdss-alert');
+  const allergyBadge = document.getElementById('allergy-badge');
 
   function formatTime(sec) {
     const m = Math.floor(sec / 60);
@@ -2858,13 +2939,14 @@ body {
       continueBtn.classList.add('hidden');
       stopBtn.classList.remove('hidden');
       if (!timerInterval) timerInterval = setInterval(tickTimer, 1000);
+      startProgressiveScribing();
     } else {
       recordBtn.classList.remove('recording');
       recordBtn.querySelector('.record-label').textContent = t('record');
       recordBtn.style.display = 'inline-flex';
       pauseBtn.classList.add('hidden');
       continueBtn.classList.add('hidden');
-      stopBtn.classList.add('hidden');
+      stopBtn.classList.remove('hidden');
       if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
     }
   }
@@ -2886,27 +2968,142 @@ body {
     pauseBtn.classList.remove('hidden');
   });
 
-  // ===== Checklist auto-progression =====
-  const sectionOrder = ['chief', 'hpi', 'meds', 'diseases'];
-  let currentSectionIdx = 0;
+  // ===== Finalize Button =====
+  document.querySelector('.btn-finalize')?.addEventListener('click', () => {
+    // Stop recording
+    setRecordingState(false);
+    stopBtn.classList.add('hidden');
 
-  function completeSection(sectionKey) {
-    const item = document.querySelector(`.checklist-item[data-section="${sectionKey}"]`);
-    if (!item) return;
-    const icon = item.querySelector('.check-icon');
-    const text = item.querySelector('.text-pending');
-    if (icon && text) {
-      icon.classList.remove('pending');
-      icon.classList.add('complete');
-      icon.textContent = '✓';
-      text.classList.remove('text-pending');
-      text.classList.add('text-complete');
-    }
+    // Convert all spinners to checkmarks
+    document.querySelectorAll('.checklist-item').forEach(item => {
+      const checkIcon = item.querySelector('.check-icon');
+      if (checkIcon) {
+        checkIcon.classList.remove('loading', 'pending');
+        checkIcon.classList.add('complete');
+        checkIcon.innerHTML = '\u2713';
+      }
+      const textSpan = item.querySelector('.scribe-text');
+      if (textSpan) {
+        textSpan.classList.remove('text-pending');
+        textSpan.classList.add('text-complete');
+      }
+    });
+
+    // Clear pending scribe timeouts
+    scribeTimeouts.forEach(id => clearTimeout(id));
+    scribeTimeouts = [];
+    scribing = false;
+  });
+
+  // ===== Progressive Scribe System =====
+  function startProgressiveScribing() {
+    if (scribing) return;
+    scribing = true;
+    allergyAlertShown = false;
+
+    const scribePlan = [
+      { section: 'chief', delay: 2000 },
+      { section: 'hpi', delay: 8000 },
+      { section: 'meds', delay: 12000 },
+      { section: 'diseases', delay: 17000 }
+    ];
+
+    scribePlan.forEach(plan => {
+      const tid = setTimeout(() => scribeSection(plan.section), plan.delay);
+      scribeTimeouts.push(tid);
+    });
   }
 
-  [8000, 16000, 24000, 32000].forEach((delay, idx) => {
-    setTimeout(() => completeSection(sectionOrder[idx]), delay);
-  });
+  function scribeSection(sectionKey) {
+    const text = t(sectionKey + 'Text');
+    const item = document.querySelector(`.checklist-item[data-section="${sectionKey}"]`);
+    if (!item) return;
+
+    // Reveal the item with animation
+    item.classList.remove('hidden');
+    item.classList.add('checklist-item-enter');
+
+    // Ensure spinner is showing
+    const checkIcon = item.querySelector('.check-icon');
+    if (checkIcon) {
+      checkIcon.classList.add('loading');
+      checkIcon.classList.remove('pending');
+      if (!checkIcon.querySelector('.spinner')) {
+        checkIcon.innerHTML = '<span class="spinner"></span>';
+      }
+    }
+
+    // Update the label in case language changed
+    const strong = item.querySelector('strong');
+    if (strong) strong.textContent = t(sectionKey + 'Label');
+
+    // Get text span and type word by word
+    const textSpan = item.querySelector('.scribe-text');
+    if (!textSpan) return;
+    textSpan.textContent = '';
+
+    typeWordByWord(textSpan, text, sectionKey);
+  }
+
+  function typeWordByWord(element, fullText, sectionKey) {
+    const words = fullText.split(' ');
+    let currentIndex = 0;
+    let allergyTriggered = false;
+
+    function typeNextWord() {
+      if (currentIndex >= words.length || !scribing) {
+        element.textContent = fullText;
+        return;
+      }
+
+      const word = words[currentIndex];
+      element.textContent += (currentIndex > 0 ? ' ' : '') + word;
+      currentIndex++;
+
+      // Check if we just typed the allergy trigger word in diseases section
+      if (sectionKey === 'diseases' && !allergyTriggered) {
+        const lower = word.toLowerCase();
+        if (lower.startsWith('alergia') || lower.startsWith('allergy')) {
+          allergyTriggered = true;
+          scheduleCDSSAlert();
+        }
+      }
+
+      // Calculate delay for next word
+      let nextDelay = 180 + (Math.random() - 0.5) * 160;
+
+      if (word.endsWith('.')) {
+        nextDelay += 600;
+      } else if (word.endsWith(',') || word.endsWith(';') || word.endsWith(':')) {
+        nextDelay += 300;
+      } else if (word.endsWith(')')) {
+        nextDelay += 200;
+      }
+
+      const tid = setTimeout(typeNextWord, nextDelay);
+      scribeTimeouts.push(tid);
+    }
+
+    typeNextWord();
+  }
+
+  function scheduleCDSSAlert() {
+    if (allergyAlertShown) return;
+    allergyAlertShown = true;
+
+    const tid = setTimeout(() => {
+      if (cdssAlert) {
+        cdssAlert.classList.remove('hidden');
+        cdssAlert.classList.add('cdss-alert-enter');
+      }
+      if (allergyBadge) {
+        allergyBadge.classList.remove('hidden');
+      }
+      const chatMsgs = document.getElementById('chat-messages');
+      if (chatMsgs) chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    }, 5000);
+    scribeTimeouts.push(tid);
+  }
 
   // ===== Chat flow =====
   const chatMessages = document.getElementById('chat-messages');
@@ -3540,6 +3737,7 @@ body {
       renderArticleSummary(false);
     }
   }
+
 
   // ===== Auto-start recording on load =====
   setTimeout(() => setRecordingState(true), 1500);
