@@ -10,7 +10,7 @@
       record: 'Gravar', recording: 'Gravando', pause: 'Pausar', cont: 'Continuar', stop: 'Parar',
       discard: 'Descartar', finalize: 'Finalizar e gerar nota',
       searchPH: 'Nome ou número de documento do paciente',
-      templateTitle: 'Template da consulta',
+      templateTitle: 'Consulta atual',
       chiefLabel: 'Queixa principal:',
       chiefText: 'Cefaleia de início súbito há 3 dias, com sinais de alarme (rigidez de nuca, fotofobia).',
       hpiLabel: 'História da doença atual:',
@@ -47,6 +47,8 @@
       blankPH: 'Pesquise evidências, diretrizes ou pergunte sobre o caso...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'Rol ANS', backChat: 'Voltar ao chat',
+      allergyLabel: 'Alergia',
+      allergyDetail: 'Contraste iodado — reação anafilactoide prévia',
       alertTitle: 'Alerta: Alergia a contraste iodado',
       alertDesc: 'Este paciente tem alergia a contraste iodado. Recomenda-se reconsiderar a prescrição de TC de crânio com contraste.',
       alertBtn: 'Ver evidências e conduta recomendada',
@@ -112,13 +114,70 @@
       wsSug3Full: 'Quais exames de imagem são indicados na suspeita de hemorragia subaracnóidea?',
       wsSug4Label: 'Protocolo de pré-medicação para contraste',
       wsSug4Full: 'Qual o protocolo de pré-medicação para contraste iodado em pacientes alérgicos?',
+      teSubtitle: 'Medicina baseada em evidências em tempo real',
+      teSearchPH: 'Pesquisar evidências, diretrizes, protocolos...',
+      teChip1: 'Cefaleia em trovoada',
+      teChip1Query: 'Cefaleia em trovoada diagnóstico diferencial',
+      teChip2: 'Manejo de HSA',
+      teChip2Query: 'Hemorragia subaracnóidea manejo',
+      teChip3: 'Protocolo alergia a contraste',
+      teChip3Query: 'Alergia contraste iodado pré-medicação protocolo',
+      teChip4: 'Indicações TC de crânio',
+      teChip4Query: 'TC crânio indicações sinais de alarme cefaleia',
+      teBlLabel: 'PONTO-CHAVE',
+      teBlText: 'Em pacientes com reação anafilactoide prévia a contraste iodado, a pré-medicação com corticosteroide + anti-histamínico reduz a recorrência de reações graves de 20–60% para menos de 5%.',
+      teBadgeHigh: 'GRADE Alta',
+      teBadgeMod: 'GRADE Moderada',
+      teBadgeConsensus: 'Consenso',
+      teBadgeReview: 'Revisão',
+      teBadgeMeta: 'Meta-análise',
+      teCard1Summary: 'Protocolo de pré-medicação eficaz e seguro para reações anafilactoide. Estudo prospectivo com 250 pacientes alérgicos a contraste iodado mostrou redução de reações graves de 45% para 2% com o uso de corticosteroide + anti-histamínico. Recomenda-se iniciar 12 horas antes do procedimento.',
+      teCard2Summary: 'Consenso internacional revisado em 2023. Sugere avaliação por alergologista antes de procedimentos com contraste. Teste cutâneo recomendado para confirmar diagnóstico. Dessensibilização é o padrão ouro quando o exame é essencial e não há alternativa.',
+      teCard3Summary: 'Meta-análise de 42 estudos mostrando eficácia de dessensibilização em 96% dos casos. Protocolos de 12-14 etapas com doses crescentes têm baixa taxa de reações durante o procedimento. Reações leves ocorrem em ~15% dos casos, geralmente autolimitadas.',
+      teCompTitle: 'Comparador de Diretrizes',
+      teCompPremed: 'Pré-medicação',
+      teCompSkinTest: 'Teste cutâneo',
+      teCompSwitch: 'Troca de contraste',
+      teCompAcrPremed: 'Corticosteroide IV 30-50mg + anti-histamínico IV 50mg, 1h antes do procedimento',
+      teCompAcrSkin: 'Teste cutâneo recomendado quando há histórico de reação grave',
+      teCompAcrSwitch: 'Trocar para contraste não-iônico de baixa osmolalidade se teste negativo',
+      teCompEsurPremed: 'Corticosteroide oral 50mg + anti-histamínico 50mg, 12-24h antes',
+      teCompEsurSkin: 'Teste cutânico recomendado rotineiramente',
+      teCompEsurSwitch: 'Considerar alternativa de imagem sem contraste (TC sem contraste, RM, ultrassom)',
+      teDtTitle: 'Árvore de Decisão Clínica',
+      teDtQ1: 'Paciente com reação prévia a contraste iodado necessita de novo exame com contraste?',
+      teDtQ1Yes: 'Sim, exame essencial',
+      teDtQ1No: 'Não, há alternativa',
+      teDtQ2: 'Reação prévia foi grave (anafilaxia, hipotensão, edema de glote)?',
+      teDtQ2Yes: 'Sim, grave',
+      teDtQ2No: 'Não, leve/moderada',
+      teDtHighRisk: 'Alto risco',
+      teDtHighText: 'Dessensibilização obrigatória em 12-14 etapas. Realizar em ambiente hospitalar com monitoramento cardiológico. Ter epinefrina disponível.',
+      teDtModRisk: 'Risco moderado',
+      teDtModText: 'Pré-medicação com corticosteroide + anti-histamínico. Iniciar 12h antes. Monitoramento durante o procedimento.',
+      teDtAltBadge: 'Alternativa',
+      teDtAltText: 'Considerar exame sem contraste ou técnica alternativa (RM, ultrassom, ressonância). Consultar radiologista.',
+      teDtReset: 'Recomeçar',
+      teSusTitle: 'Contexto SUS / CONITEC',
+      teSusItem1Title: 'TC de crânio com contraste',
+      teSusItem1Status: 'Disponível no SUS',
+      teSusItem1Desc: 'Coberto pelo SUS quando há indicação clínica. Em suspeita de hemorragia subaracnóidea, a TC sem contraste pode ser realizada inicialmente; com contraste é reservada para casos selecionados.',
+      teSusItem2Title: 'Encaminhamento a alergologista',
+      teSusItem2Status: 'Parcialmente disponível',
+      teSusItem2Desc: 'Disponível na rede de atenção especializada. Algumas regiões têm fila; priorizar pacientes com reação prévia grave.',
+      teSusItem3Title: 'Dessensibilização',
+      teSusItem3Status: 'Centros de referência',
+      teSusItem3Desc: 'Realizada em centros de referência (ex.: hospitais universitários, centros de alergia). O acesso pode exigir regulamento via central de regulação.',
+      teSusItem4Title: 'Contraste de baixa osmolalidade',
+      teSusItem4Status: 'Disponível no SUS',
+      teSusItem4Desc: 'Meios de baixa osmolalidade disponíveis em muitos serviços. Na impossibilidade de dessensibilização, considerar alternativas (ex.: TC sem contraste quando suficiente para o diagnóstico).',
     },
     en: {
       consultType: 'General Adult Consultation',
       record: 'Record', recording: 'Recording', pause: 'Pause', cont: 'Resume', stop: 'Stop',
       discard: 'Discard', finalize: 'Finalize and generate note',
       searchPH: 'Patient name or document number',
-      templateTitle: 'Consultation template',
+      templateTitle: 'Current consultation',
       chiefLabel: 'Chief complaint:',
       chiefText: 'Sudden onset headache for 3 days, with alarm signs (neck stiffness, photophobia).',
       hpiLabel: 'History of present illness:',
@@ -155,6 +214,8 @@
       blankPH: 'Search for evidence, guidelines, or ask about the case...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'ANS Coverage', backChat: 'Back to chat',
+      allergyLabel: 'Allergy',
+      allergyDetail: 'Iodinated contrast — prior anaphylactoid reaction',
       alertTitle: 'Alert: Iodinated contrast allergy',
       alertDesc: 'This patient has an allergy to iodinated contrast. Reconsider the prescription of head CT with contrast.',
       alertBtn: 'View evidence and recommended approach',
@@ -220,13 +281,70 @@
       wsSug3Full: 'What imaging exams are indicated for suspected subarachnoid hemorrhage?',
       wsSug4Label: 'Contrast premedication protocol',
       wsSug4Full: 'What is the premedication protocol for iodinated contrast in allergic patients?',
+      teSubtitle: 'Evidence-based medicine in real time',
+      teSearchPH: 'Search evidence, guidelines, protocols...',
+      teChip1: 'Thunderclap headache',
+      teChip1Query: 'Thunderclap headache differential diagnosis',
+      teChip2: 'SAH management',
+      teChip2Query: 'Subarachnoid hemorrhage management',
+      teChip3: 'Contrast allergy protocol',
+      teChip3Query: 'Iodinated contrast allergy premedication protocol',
+      teChip4: 'Head CT indications',
+      teChip4Query: 'Head CT indications alarm signs headache',
+      teBlLabel: 'KEY POINT',
+      teBlText: 'In patients with prior anaphylactoid reaction to iodinated contrast, premedication with corticosteroid + antihistamine reduces recurrence of severe reactions from 20–60% to less than 5%.',
+      teBadgeHigh: 'GRADE High',
+      teBadgeMod: 'GRADE Moderate',
+      teBadgeConsensus: 'Consensus',
+      teBadgeReview: 'Review',
+      teBadgeMeta: 'Meta-analysis',
+      teCard1Summary: 'Effective and safe premedication protocol for anaphylactoid reactions. Prospective study with 250 patients allergic to iodinated contrast showed reduction in severe reactions from 45% to 2% using corticosteroid + antihistamine. Initiate 12 hours before the procedure.',
+      teCard2Summary: 'International consensus updated in 2023. Suggests allergist evaluation before procedures with contrast. Skin testing recommended to confirm diagnosis. Desensitization is the gold standard when the exam is essential and no alternative exists.',
+      teCard3Summary: 'Meta-analysis of 42 studies showing desensitization efficacy in 96% of cases. Protocols with 12-14 steps using escalating doses have low reaction rates during the procedure. Mild reactions occur in ~15% of cases, generally self-limiting.',
+      teCompTitle: 'Guidelines Comparator',
+      teCompPremed: 'Premedication',
+      teCompSkinTest: 'Skin test',
+      teCompSwitch: 'Contrast switching',
+      teCompAcrPremed: 'IV corticosteroid 30-50mg + IV antihistamine 50mg, 1h before procedure',
+      teCompAcrSkin: 'Skin testing recommended when there is history of severe reaction',
+      teCompAcrSwitch: 'Switch to non-ionic low-osmolality contrast if test is negative',
+      teCompEsurPremed: 'Oral corticosteroid 50mg + antihistamine 50mg, 12-24h before',
+      teCompEsurSkin: 'Skin testing recommended routinely',
+      teCompEsurSwitch: 'Consider alternative imaging without contrast (non-contrast CT, MRI, ultrasound)',
+      teDtTitle: 'Clinical Decision Tree',
+      teDtQ1: 'Does the patient with prior iodinated contrast reaction need a new exam with contrast?',
+      teDtQ1Yes: 'Yes, exam essential',
+      teDtQ1No: 'No, alternative available',
+      teDtQ2: 'Was the prior reaction severe (anaphylaxis, hypotension, laryngeal edema)?',
+      teDtQ2Yes: 'Yes, severe',
+      teDtQ2No: 'No, mild/moderate',
+      teDtHighRisk: 'High risk',
+      teDtHighText: 'Mandatory desensitization in 12-14 steps. Perform in hospital setting with cardiac monitoring. Have epinephrine available.',
+      teDtModRisk: 'Moderate risk',
+      teDtModText: 'Premedication with corticosteroid + antihistamine. Initiate 12h before. Monitor during procedure.',
+      teDtAltBadge: 'Alternative',
+      teDtAltText: 'Consider non-contrast exam or alternative technique (MRI, ultrasound, alternative imaging). Consult radiologist.',
+      teDtReset: 'Restart',
+      teSusTitle: 'SUS / CONITEC Context',
+      teSusItem1Title: 'Head CT with contrast',
+      teSusItem1Status: 'Available in SUS',
+      teSusItem1Desc: 'Covered by SUS when clinically indicated. In suspected subarachnoid hemorrhage, non-contrast CT may be performed first; contrast is reserved for selected cases.',
+      teSusItem2Title: 'Allergist referral',
+      teSusItem2Status: 'Partially available',
+      teSusItem2Desc: 'Available in the specialized care network. Some regions have waiting lists; prioritize patients with prior severe reactions.',
+      teSusItem3Title: 'Desensitization',
+      teSusItem3Status: 'Reference centers',
+      teSusItem3Desc: 'Performed at reference centers (e.g., university hospitals, allergy centers). Access may require regulation via central coordination.',
+      teSusItem4Title: 'Low-osmolality contrast',
+      teSusItem4Status: 'Available in SUS',
+      teSusItem4Desc: 'Low-osmolality agents available in many services. If desensitization is not possible, consider alternatives (e.g., non-contrast CT when sufficient).',
     },
     es: {
       consultType: 'Consulta General Adulto',
       record: 'Grabar', recording: 'Grabando', pause: 'Pausar', cont: 'Continuar', stop: 'Detener',
       discard: 'Descartar', finalize: 'Finalizar y generar nota',
       searchPH: 'Nombre o número de documento del paciente',
-      templateTitle: 'Plantilla de la consulta',
+      templateTitle: 'Consulta actual',
       chiefLabel: 'Queja principal:',
       chiefText: 'Cefalea de inicio súbito hace 3 días, con signos de alarma (rigidez de nuca, fotofobia).',
       hpiLabel: 'Historia de la enfermedad actual:',
@@ -263,6 +381,8 @@
       blankPH: 'Busque evidencias, guías o pregunte sobre el caso...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'Cobertura ANS', backChat: 'Volver al chat',
+      allergyLabel: 'Alergia',
+      allergyDetail: 'Contraste yodado — reacción anafilactoide previa',
       alertTitle: 'Alerta: Alergia al contraste yodado',
       alertDesc: 'Este paciente tiene alergia al contraste yodado. Se recomienda reconsiderar la prescripción de TC de cráneo con contraste.',
       alertBtn: 'Ver evidencias y conducta recomendada',
@@ -328,6 +448,63 @@
       wsSug3Full: '¿Qué exámenes de imagen están indicados en la sospecha de hemorragia subaracnoidea?',
       wsSug4Label: 'Protocolo de premedicación para contraste',
       wsSug4Full: '¿Cuál es el protocolo de premedicación para contraste yodado en pacientes alérgicos?',
+      teSubtitle: 'Medicina basada en evidencia en tiempo real',
+      teSearchPH: 'Buscar evidencias, guías, protocolos...',
+      teChip1: 'Cefalea en trueno',
+      teChip1Query: 'Cefalea en trueno diagnóstico diferencial',
+      teChip2: 'Manejo de HSA',
+      teChip2Query: 'Hemorragia subaracnoidea manejo',
+      teChip3: 'Protocolo alergia a contraste',
+      teChip3Query: 'Alergia contraste yodado premedicación protocolo',
+      teChip4: 'Indicaciones TC de cráneo',
+      teChip4Query: 'TC cráneo indicaciones signos de alarma cefalea',
+      teBlLabel: 'PUNTO CLAVE',
+      teBlText: 'En pacientes con reacción anafilactoide previa al contraste yodado, la premedicación con corticosteroide + antihistamínico reduce la recurrencia de reacciones graves del 20–60% a menos del 5%.',
+      teBadgeHigh: 'GRADE Alta',
+      teBadgeMod: 'GRADE Moderada',
+      teBadgeConsensus: 'Consenso',
+      teBadgeReview: 'Revisión',
+      teBadgeMeta: 'Metaanálisis',
+      teCard1Summary: 'Protocolo de premedicación eficaz y seguro para reacciones anafilactoide. Estudio prospectivo con 250 pacientes alérgicos al contraste yodado mostró reducción de reacciones graves del 45% al 2% con corticosteroide + antihistamínico. Se recomienda iniciar 12 horas antes del procedimiento.',
+      teCard2Summary: 'Consenso internacional revisado en 2023. Sugiere evaluación por alergólogo antes de procedimientos con contraste. Se recomienda prueba cutánea para confirmar el diagnóstico. La desensibilización es el estándar de oro cuando el examen es esencial y no hay alternativa.',
+      teCard3Summary: 'Metaanálisis de 42 estudios que muestra eficacia de desensibilización en el 96% de los casos. Los protocolos de 12-14 pasos con dosis crecientes tienen baja tasa de reacciones durante el procedimiento. Las reacciones leves ocurren en ~15% de los casos, generalmente autolimitadas.',
+      teCompTitle: 'Comparador de Directrices',
+      teCompPremed: 'Premedicación',
+      teCompSkinTest: 'Prueba cutánea',
+      teCompSwitch: 'Cambio de contraste',
+      teCompAcrPremed: 'Corticosteroide IV 30-50mg + antihistamínico IV 50mg, 1h antes del procedimiento',
+      teCompAcrSkin: 'Se recomienda prueba cutánea cuando hay historial de reacción grave',
+      teCompAcrSwitch: 'Cambiar a contraste no iónico de baja osmolalidad si la prueba es negativa',
+      teCompEsurPremed: 'Corticosteroide oral 50mg + antihistamínico 50mg, 12-24h antes',
+      teCompEsurSkin: 'Se recomienda prueba cutánea de forma rutinaria',
+      teCompEsurSwitch: 'Considerar alternativa de imagen sin contraste (TC sin contraste, RM, ecografía)',
+      teDtTitle: 'Árbol de Decisión Clínica',
+      teDtQ1: '¿El paciente con reacción previa al contraste yodado necesita un nuevo examen con contraste?',
+      teDtQ1Yes: 'Sí, examen esencial',
+      teDtQ1No: 'No, hay alternativa',
+      teDtQ2: '¿Fue grave la reacción previa (anafilaxia, hipotensión, edema laríngeo)?',
+      teDtQ2Yes: 'Sí, grave',
+      teDtQ2No: 'No, leve/moderada',
+      teDtHighRisk: 'Alto riesgo',
+      teDtHighText: 'Desensibilización obligatoria en 12-14 pasos. Realizar en ambiente hospitalario con monitoreo cardiológico. Tener epinefrina disponible.',
+      teDtModRisk: 'Riesgo moderado',
+      teDtModText: 'Premedicación con corticosteroide + antihistamínico. Iniciar 12h antes. Monitoreo durante el procedimiento.',
+      teDtAltBadge: 'Alternativa',
+      teDtAltText: 'Considerar examen sin contraste o técnica alternativa (RM, ecografía, imagen alternativa). Consultar radiólogo.',
+      teDtReset: 'Reiniciar',
+      teSusTitle: 'Contexto SUS / CONITEC',
+      teSusItem1Title: 'TC de cráneo con contraste',
+      teSusItem1Status: 'Disponible en el SUS',
+      teSusItem1Desc: 'Cubierto por el SUS cuando hay indicación clínica. En sospecha de hemorragia subaracnoidea, la TC sin contraste puede realizarse inicialmente; con contraste se reserva para casos seleccionados.',
+      teSusItem2Title: 'Derivación a alergólogo',
+      teSusItem2Status: 'Parcialmente disponible',
+      teSusItem2Desc: 'Disponible en la red de atención especializada. Algunas regiones tienen lista de espera; priorizar pacientes con reacción previa grave.',
+      teSusItem3Title: 'Desensibilización',
+      teSusItem3Status: 'Centros de referencia',
+      teSusItem3Desc: 'Realizada en centros de referencia (p. ej., hospitales universitarios, centros de alergia). El acceso puede requerir regulación a través de la coordinación central.',
+      teSusItem4Title: 'Contraste de baja osmolalidad',
+      teSusItem4Status: 'Disponible en el SUS',
+      teSusItem4Desc: 'Agentes de baja osmolalidad disponibles en muchos servicios. Si la desensibilización no es posible, considerar alternativas (p. ej., TC sin contraste cuando sea suficiente).',
     }
   };
 
@@ -725,11 +902,6 @@
     workspaceRolWrap.classList.add('hidden');
     document.getElementById('workspace-blank-wrap')?.classList.add('hidden');
     refIconsBar.classList.remove('hidden');
-    gradeBar.classList.remove('hidden');
-    susBar?.classList.remove('hidden');
-    susContent?.classList.add('hidden');
-    susBtn?.classList.remove('expanded');
-    renderArticleSummary(true);
   }
 
   function closeWorkspace() {
@@ -879,6 +1051,115 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleWorkspaceSend(); }
   });
 
+  // ===== Allergy Badge expand/collapse =====
+  if (allergyBadge) {
+    allergyBadge.addEventListener('click', () => {
+      allergyBadge.classList.toggle('expanded');
+      const detail = document.getElementById('allergy-detail');
+      if (detail) detail.classList.toggle('hidden');
+    });
+  }
+
+  // ===== Telepatia Evidence Improvements =====
+
+  // TE Search - chip click fills search and opens blank workspace
+  document.querySelectorAll('.te-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const query = chip.dataset.query;
+      const searchInput = document.getElementById('te-search-input');
+      if (searchInput) searchInput.value = query;
+      // Open blank evidence workspace
+      if (typeof openBlankWorkspace === 'function') openBlankWorkspace();
+      const blankInput = document.getElementById('workspace-blank-input');
+      if (blankInput) { blankInput.value = query; blankInput.focus(); }
+    });
+  });
+
+  // TE Search input - Enter key opens blank workspace
+  const teSearchInput = document.getElementById('te-search-input');
+  if (teSearchInput) {
+    teSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && teSearchInput.value.trim()) {
+        e.preventDefault();
+        if (typeof openBlankWorkspace === 'function') openBlankWorkspace();
+        const blankInput = document.getElementById('workspace-blank-input');
+        if (blankInput) { blankInput.value = teSearchInput.value.trim(); blankInput.focus(); }
+      }
+    });
+  }
+
+  // Decision tree navigation
+  document.querySelectorAll('.te-dt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextId = btn.dataset.next;
+      const currentNode = btn.closest('.te-dt-node');
+      if (currentNode) {
+        currentNode.classList.remove('te-dt-active');
+        currentNode.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = true);
+        currentNode.style.opacity = '0.6';
+      }
+      const nextNode = document.getElementById(nextId);
+      if (nextNode) {
+        nextNode.classList.remove('hidden');
+        nextNode.classList.add('te-dt-active');
+      }
+      const resetBtn = document.getElementById('te-dt-reset');
+      if (resetBtn) resetBtn.classList.remove('hidden');
+    });
+  });
+
+  // Decision tree reset
+  const dtReset = document.getElementById('te-dt-reset');
+  if (dtReset) {
+    dtReset.addEventListener('click', () => {
+      document.querySelectorAll('.te-dt-node').forEach(node => {
+        if (node.id === 'dt-node-1') {
+          node.classList.remove('hidden');
+          node.classList.add('te-dt-active');
+          node.style.opacity = '1';
+          node.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = false);
+        } else {
+          node.classList.add('hidden');
+          node.classList.remove('te-dt-active');
+          node.style.opacity = '1';
+          node.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = false);
+        }
+      });
+      dtReset.classList.add('hidden');
+    });
+  }
+
+  // SUS context toggle
+  const susToggle = document.getElementById('te-sus-toggle');
+  const susBody = document.getElementById('te-sus-body');
+  const susHeader = document.querySelector('.te-sus-header');
+  if (susToggle && susBody && susHeader) {
+    susHeader.addEventListener('click', () => {
+      susBody.classList.toggle('hidden');
+      susToggle.classList.toggle('expanded');
+    });
+  }
+
+  // Card expand toggle
+  document.querySelectorAll('.te-card-expand').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.te-card');
+      const summary = card.querySelector('.te-card-summary');
+      if (summary) {
+        if (summary.style.maxHeight) {
+          summary.style.maxHeight = null;
+          summary.style.whiteSpace = null;
+          btn.classList.remove('expanded');
+        } else {
+          summary.style.maxHeight = 'none';
+          summary.style.whiteSpace = 'normal';
+          btn.classList.add('expanded');
+        }
+      }
+    });
+  });
+
   // ===== FIX: Make ALL suggestion buttons functional =====
   const suggestionBtns = document.querySelectorAll('.suggestions .suggestion-btn');
   suggestionBtns.forEach((btn) => {
@@ -968,6 +1249,12 @@
     const discardBtn = document.querySelector('.btn-discard');
     if (discardBtn) discardBtn.textContent = t('discard');
     setBtnText(document.querySelector('.btn-finalize'), t('finalize'));
+
+    // Allergy badge
+    const allergyLabelEl = document.querySelector('.allergy-badge-label');
+    if (allergyLabelEl) allergyLabelEl.textContent = t('allergyLabel');
+    const allergyDetailEl = document.getElementById('allergy-detail');
+    if (allergyDetailEl) allergyDetailEl.textContent = t('allergyDetail');
 
     // ---- Scribe pane ----
     const searchInput = document.querySelector('.search-input');
@@ -1176,6 +1463,127 @@
     });
     const lpFooter = document.querySelector('.lgpd-footer');
     if (lpFooter) lpFooter.textContent = t('lgpdFooter');
+
+    // ---- TE Components (Telepatia Evidence) ----
+
+    // TE Empty State
+    const teSubtitleEl = document.querySelector('.workspace-empty .te-subtitle');
+    if (teSubtitleEl) teSubtitleEl.textContent = t('teSubtitle');
+    const teSearchInputEl = document.querySelector('.te-search-input');
+    if (teSearchInputEl) teSearchInputEl.placeholder = t('teSearchPH');
+
+    // TE Chips
+    const teChips = document.querySelectorAll('.te-chip');
+    teChips.forEach((chip, i) => {
+      const chipKey = `teChip${i + 1}`;
+      const queryKey = `teChip${i + 1}Query`;
+      if (t(chipKey)) chip.textContent = t(chipKey);
+      if (t(queryKey)) chip.dataset.query = t(queryKey);
+    });
+
+    // TE Bottom Line
+    const teBlLabelEl = document.querySelector('.te-bl-label');
+    if (teBlLabelEl) teBlLabelEl.textContent = t('teBlLabel');
+    const teBlTextEl = document.querySelector('.te-bl-text');
+    if (teBlTextEl) teBlTextEl.textContent = t('teBlText');
+
+    // TE Badge Labels (match actual HTML classes: te-badge-grade-high, te-badge-grade-mod, te-badge-type)
+    document.querySelectorAll('.te-badge-grade-high').forEach(el => { el.textContent = t('teBadgeHigh'); });
+    document.querySelectorAll('.te-badge-grade-mod').forEach(el => { el.textContent = t('teBadgeMod'); });
+    // te-badge-type: per-card badge (Consenso, Revisão, Meta-análise)
+    const teCardBadgeTypes = document.querySelectorAll('.te-card .te-badge-type');
+    const teCardBadgeKeys = ['teBadgeConsensus', 'teBadgeReview', 'teBadgeMeta'];
+    teCardBadgeTypes.forEach((el, i) => { if (teCardBadgeKeys[i]) el.textContent = t(teCardBadgeKeys[i]); });
+
+    // TE Evidence Cards — summaries
+    const teCards = document.querySelectorAll('.te-card');
+    teCards.forEach((card, i) => {
+      const summaryEl = card.querySelector('.te-card-summary');
+      if (summaryEl) summaryEl.textContent = t(`teCard${i + 1}Summary`);
+    });
+
+    // TE Guidelines Comparator (h4.te-comp-title has SVG inside, use setBtnText)
+    setBtnText(document.querySelector('.te-comp-title'), t('teCompTitle'));
+
+    // Comparator data rows (skip header row): each row has .te-comp-label + 2 data cells
+    const teCompRows = document.querySelectorAll('.te-comp-row:not(.te-comp-header-row)');
+    const compRowKeys = [
+      ['teCompPremed', 'teCompAcrPremed', 'teCompEsurPremed'],
+      ['teCompSkinTest', 'teCompAcrSkin', 'teCompEsurSkin'],
+      ['teCompSwitch', 'teCompAcrSwitch', 'teCompEsurSwitch']
+    ];
+    teCompRows.forEach((row, i) => {
+      if (!compRowKeys[i]) return;
+      const cells = row.querySelectorAll('.te-comp-cell');
+      // cell 0 = label, cell 1 = ACR, cell 2 = ESUR
+      if (cells[0]) cells[0].textContent = t(compRowKeys[i][0]);
+      if (cells[1]) cells[1].textContent = t(compRowKeys[i][1]);
+      if (cells[2]) cells[2].textContent = t(compRowKeys[i][2]);
+    });
+
+    // TE Clinical Decision Tree (h4.te-dt-title has SVG inside, use setBtnText)
+    setBtnText(document.querySelector('.te-dt-title'), t('teDtTitle'));
+
+    // Node 1: id="dt-node-1"
+    const dtNode1 = document.getElementById('dt-node-1');
+    if (dtNode1) {
+      const q1p = dtNode1.querySelector('p');
+      if (q1p) q1p.textContent = t('teDtQ1');
+      const q1btns = dtNode1.querySelectorAll('.te-dt-btn');
+      if (q1btns[0]) q1btns[0].textContent = t('teDtQ1Yes');
+      if (q1btns[1]) q1btns[1].textContent = t('teDtQ1No');
+    }
+
+    // Node 2: id="dt-node-2"
+    const dtNode2 = document.getElementById('dt-node-2');
+    if (dtNode2) {
+      const q2p = dtNode2.querySelector('p');
+      if (q2p) q2p.textContent = t('teDtQ2');
+      const q2btns = dtNode2.querySelectorAll('.te-dt-btn');
+      if (q2btns[0]) q2btns[0].textContent = t('teDtQ2Yes');
+      if (q2btns[1]) q2btns[1].textContent = t('teDtQ2No');
+    }
+
+    // Decision outcomes: id="dt-node-3a" (high risk), "dt-node-3b" (mod risk), "dt-node-alt"
+    const dtNode3a = document.getElementById('dt-node-3a');
+    if (dtNode3a) {
+      const badge3a = dtNode3a.querySelector('.te-dt-badge');
+      if (badge3a) badge3a.textContent = t('teDtHighRisk');
+      const text3a = dtNode3a.querySelector('p');
+      if (text3a) text3a.textContent = t('teDtHighText');
+    }
+    const dtNode3b = document.getElementById('dt-node-3b');
+    if (dtNode3b) {
+      const badge3b = dtNode3b.querySelector('.te-dt-badge');
+      if (badge3b) badge3b.textContent = t('teDtModRisk');
+      const text3b = dtNode3b.querySelector('p');
+      if (text3b) text3b.textContent = t('teDtModText');
+    }
+    const dtNodeAlt = document.getElementById('dt-node-alt');
+    if (dtNodeAlt) {
+      const badgeAlt = dtNodeAlt.querySelector('.te-dt-badge');
+      if (badgeAlt) badgeAlt.textContent = t('teDtAltBadge');
+      const textAlt = dtNodeAlt.querySelector('p');
+      if (textAlt) textAlt.textContent = t('teDtAltText');
+    }
+
+    // Reset button: id="te-dt-reset"
+    setBtnText(document.getElementById('te-dt-reset'), t('teDtReset'));
+
+    // TE SUS Context
+    const teSusTitleEl = document.querySelector('.te-sus-title');
+    if (teSusTitleEl) teSusTitleEl.textContent = t('teSusTitle');
+
+    const teSusItems = document.querySelectorAll('.te-sus-item');
+    teSusItems.forEach((item, i) => {
+      const idx = i + 1;
+      const titleEl = item.querySelector('strong');
+      const statusEl = item.querySelector('.te-sus-status');
+      const descEl = item.querySelector('p');
+      if (titleEl) titleEl.textContent = t(`teSusItem${idx}Title`);
+      if (statusEl) statusEl.textContent = t(`teSusItem${idx}Status`);
+      if (descEl) descEl.textContent = t(`teSusItem${idx}Desc`);
+    });
 
     // Re-render article summary if it's currently visible
     if (!workspaceSummaryWrap?.classList.contains('hidden')) {

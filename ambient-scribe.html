@@ -1048,14 +1048,58 @@ body {
   font-weight: 600;
   background: var(--danger);
   color: white;
+  border: none;
   border-radius: 20px;
   animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: default;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  max-width: 110px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.allergy-badge:hover {
+  background: #b91c1c;
+}
+
+.allergy-badge.expanded {
+  max-width: 500px;
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
 }
 
 .allergy-badge svg {
   stroke: white;
   flex-shrink: 0;
+}
+
+.allergy-chevron {
+  transition: transform 0.25s ease;
+  margin-left: 0.1rem;
+}
+
+.allergy-badge.expanded .allergy-chevron {
+  transform: rotate(180deg);
+}
+
+.allergy-badge-detail {
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.3s ease;
+}
+
+.allergy-badge-detail::before {
+  content: '—';
+  margin: 0 0.3rem;
+  opacity: 0.6;
+}
+
+.allergy-badge.expanded .allergy-badge-detail {
+  opacity: 1;
+  max-width: 350px;
 }
 
 @keyframes badge-pop {
@@ -1962,6 +2006,338 @@ body {
   font-weight: 600;
 }
 
+/* ===== Telepatia Evidence Improvements ===== */
+
+/* TE Empty state - Search */
+.te-logo {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
+  color: white; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.te-subtitle {
+  font-size: 0.85rem; color: var(--text-muted); margin-top: -0.25rem;
+}
+
+.te-search-wrap {
+  position: relative; width: 100%; max-width: 480px; margin-top: 1rem;
+}
+
+.te-search-icon {
+  position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+}
+
+.te-search-input {
+  width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem;
+  font-size: 0.95rem; border: 2px solid var(--border); border-radius: 12px;
+  font-family: var(--font-sans); background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.te-search-input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-light), 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.te-search-input::placeholder { color: #94a3b8; }
+
+.te-suggestions {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  justify-content: center; margin-top: 1rem; max-width: 520px;
+}
+
+.te-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.45rem 0.85rem; font-size: 0.8rem;
+  background: white; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--text); cursor: pointer; font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.te-chip:hover {
+  background: var(--accent-light); border-color: var(--accent);
+  transform: translateY(-1px); box-shadow: 0 2px 8px rgba(34,197,94,0.15);
+}
+
+.te-chip-icon { font-size: 0.9em; }
+
+/* TE Bottom Line */
+.te-bottom-line {
+  display: flex; gap: 0.75rem; padding: 1rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1px solid #bbf7d0; border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.te-bl-icon {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent); color: white;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.te-bl-label {
+  display: block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.te-bl-text {
+  font-size: 0.9rem; line-height: 1.55; color: var(--text);
+  font-weight: 500; margin: 0;
+}
+
+/* TE Evidence Cards */
+.te-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+
+.te-card {
+  background: white; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.85rem 1rem; transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+
+.te-card:hover {
+  border-color: var(--accent); box-shadow: 0 2px 12px rgba(34,197,94,0.1);
+}
+
+.te-card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.35rem;
+}
+
+.te-card-source { display: flex; align-items: center; gap: 0.5rem; }
+
+.te-card-journal {
+  font-size: 0.75rem; font-weight: 600; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+.te-card-year {
+  font-size: 0.7rem; color: var(--text-muted);
+  background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 4px;
+}
+
+.te-card-badges { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+.te-badge {
+  display: inline-flex; align-items: center;
+  padding: 0.15rem 0.5rem; font-size: 0.65rem; font-weight: 600;
+  border-radius: 10px; letter-spacing: 0.02em;
+}
+
+.te-badge-grade-high { background: #dcfce7; color: #166534; }
+.te-badge-grade-mod { background: #fef3c7; color: #92400e; }
+.te-badge-grade-low { background: #fee2e2; color: #991b1b; }
+.te-badge-type { background: #eff6ff; color: #1e40af; }
+
+.te-card-title {
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  line-height: 1.4; margin: 0 0 0.35rem;
+}
+
+.te-card-summary {
+  font-size: 0.8rem; line-height: 1.55; color: var(--text-muted); margin: 0 0 0.5rem;
+}
+
+.te-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.te-card-cite {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.7rem; color: var(--text-muted); cursor: pointer;
+  transition: color 0.15s;
+}
+
+.te-card-cite:hover { color: var(--accent); }
+
+.te-card-expand {
+  width: 24px; height: 24px; border: 1px solid var(--border);
+  background: white; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all 0.15s;
+}
+
+.te-card-expand:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-light);
+}
+
+.te-card-expand.expanded svg { transform: rotate(180deg); }
+
+/* TE Guidelines Comparator */
+.te-comparator { margin-bottom: 1rem; }
+
+.te-comp-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.te-comp-title svg { color: var(--accent); }
+
+.te-comp-table {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; font-size: 0.78rem;
+}
+
+.te-comp-row {
+  display: grid; grid-template-columns: 130px 1fr 1fr;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.te-comp-row:last-child { border-bottom: none; }
+
+.te-comp-header-row {
+  background: #f8fafc; font-weight: 600; color: var(--text);
+}
+
+.te-comp-cell {
+  padding: 0.5rem 0.65rem; line-height: 1.45; color: var(--text-muted);
+}
+
+.te-comp-label {
+  font-weight: 600; color: var(--text); background: #fafafa;
+  border-right: 1px solid #f1f5f9;
+}
+
+.te-comp-col {
+  text-align: center; font-size: 0.75rem;
+}
+
+/* TE Clinical Decision Tree */
+.te-decision-tree { margin-bottom: 1rem; }
+
+.te-dt-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.te-dt-title svg { color: #7c3aed; }
+
+.te-dt-flow { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.te-dt-node {
+  padding: 0.75rem 1rem; border-radius: var(--radius);
+  animation: item-fade-in 0.3s ease-out;
+}
+
+.te-dt-node.hidden { display: none !important; }
+
+.te-dt-question {
+  background: #faf5ff; border: 1px solid #e9d5ff;
+}
+
+.te-dt-question p {
+  font-size: 0.85rem; font-weight: 500; color: var(--text);
+  margin: 0 0 0.5rem; line-height: 1.45;
+}
+
+.te-dt-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.te-dt-btn {
+  padding: 0.4rem 0.85rem; font-size: 0.78rem; font-weight: 500;
+  border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.te-dt-yes {
+  background: #fef2f2; color: #991b1b; border-color: #fecaca;
+}
+.te-dt-yes:hover { background: #fee2e2; border-color: #fca5a5; }
+
+.te-dt-no {
+  background: #f0fdf4; color: #166534; border-color: #bbf7d0;
+}
+.te-dt-no:hover { background: #dcfce7; border-color: #86efac; }
+
+.te-dt-answer {
+  background: white; border: 1px solid var(--border);
+}
+
+.te-dt-answer p {
+  font-size: 0.82rem; line-height: 1.55; color: var(--text); margin: 0.4rem 0 0;
+}
+
+.te-dt-badge {
+  display: inline-block; padding: 0.15rem 0.5rem;
+  font-size: 0.65rem; font-weight: 700; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.te-dt-badge-danger { background: #fee2e2; color: #991b1b; }
+.te-dt-badge-warn { background: #fef3c7; color: #92400e; }
+.te-dt-badge-safe { background: #dcfce7; color: #166534; }
+
+.te-dt-reset {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.75rem; font-size: 0.78rem;
+  background: #f8fafc; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer;
+  font-family: var(--font-sans); color: var(--text-muted);
+  transition: all 0.15s; align-self: flex-start;
+}
+
+.te-dt-reset:hover { background: #f1f5f9; color: var(--text); }
+
+.te-dt-reset.hidden { display: none !important; }
+
+/* TE SUS Context */
+.te-sus-context {
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem;
+}
+
+.te-sus-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1rem; cursor: pointer;
+}
+
+.te-sus-flag { font-size: 1.1em; }
+
+.te-sus-title {
+  flex: 1; font-size: 0.82rem; font-weight: 600; color: #166534; margin: 0;
+}
+
+.te-sus-toggle {
+  width: 24px; height: 24px; border: none; background: transparent;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: #166534; transition: transform 0.2s;
+}
+
+.te-sus-toggle.expanded svg { transform: rotate(180deg); }
+
+.te-sus-body { padding: 0 1rem 0.75rem; }
+
+.te-sus-body.hidden { display: none !important; }
+
+.te-sus-item {
+  padding: 0.5rem 0; border-bottom: 1px solid #bbf7d0;
+}
+
+.te-sus-item:last-child { border-bottom: none; }
+
+.te-sus-item strong {
+  display: block; font-size: 0.8rem; color: var(--text); margin-bottom: 0.15rem;
+}
+
+.te-sus-item p {
+  font-size: 0.75rem; line-height: 1.45; color: var(--text-muted); margin: 0.2rem 0 0;
+}
+
+.te-sus-status {
+  display: inline-block; padding: 0.1rem 0.45rem;
+  font-size: 0.6rem; font-weight: 600; border-radius: 8px;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+.te-sus-available { background: #dcfce7; color: #166534; }
+.te-sus-partial { background: #fef3c7; color: #92400e; }
+.te-sus-limited { background: #fee2e2; color: #991b1b; }
+
 @media (max-width: 1100px) {
   .main-grid {
     grid-template-columns: 1fr;
@@ -2009,14 +2385,18 @@ body {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
             Parar
           </button>
-          <span class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
+          <button class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
               <line x1="12" y1="9" x2="12" y2="13"/>
               <line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
-            Alergia
-          </span>
+            <span class="allergy-badge-label">Alergia</span>
+            <span class="allergy-badge-detail hidden" id="allergy-detail">Contraste iodado — reação anafilactoide prévia</span>
+            <svg class="allergy-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
         </div>
       </div>
       <div class="header-right">
@@ -2063,7 +2443,7 @@ body {
         </div>
 
         <div class="checklist-container">
-          <h3 class="checklist-title">Template da consulta</h3>
+          <h3 class="checklist-title">Consulta atual</h3>
           <ul class="checklist">
             <li class="checklist-item hidden" data-section="chief">
               <span class="check-icon loading"><span class="spinner"></span></span>
@@ -2117,14 +2497,19 @@ body {
       <!-- Center: Telepatia Intelligence workspace -->
       <section class="workspace-pane" id="workspace-pane">
         <div class="workspace-empty" id="workspace-empty">
-          <p class="workspace-empty-title">Telepatia Evidence</p>
-          <p>Explore artigos, diretrizes e referências confiáveis (NEJM, JAMA, ABN) sugeridos pelo chat.</p>
-          <button class="btn-new-evidence" id="btn-new-evidence">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="te-logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
-            Nova pesquisa de evidências
-          </button>
+          </div>
+          <p class="workspace-empty-title">Telepatia Evidence</p>
+          <p class="te-subtitle">Medicina baseada em evidências em tempo real</p>
+          <div class="te-search-wrap">
+            <svg class="te-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" class="te-search-input" id="te-search-input" placeholder="Pesquisar evidências, diretrizes, protocolos...">
+          </div>
         </div>
         <div class="workspace-content hidden" id="workspace-content">
           <div class="workspace-header">
@@ -2183,38 +2568,218 @@ body {
           </div>
           <div class="workspace-body">
             <div class="workspace-summary-wrap" id="workspace-summary-wrap">
-              <div class="workspace-summary" id="workspace-summary">
-                <p class="summary-explanation" id="summary-explanation"></p>
-                <div class="summary-actions">
-                  <strong>Ações para o médico:</strong>
-                  <ul id="summary-actions-list"></ul>
-                </div>
-                <button class="btn-go-deeper" id="btn-go-deeper">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 15l-6-6-6 6"/>
-                  </svg>
-                  <span class="btn-go-deeper-text">Aprofundar: resultados, estatísticas e metodologia</span>
-                </button>
-                <div class="summary-deeper hidden" id="summary-deeper">
-                  <h5>Metodologia</h5>
-                  <p id="deeper-methodology"></p>
-                  <h5>Resultados e dados estatísticos</h5>
-                  <p id="deeper-results"></p>
-                </div>
-              </div>
-              <div class="workspace-chat">
-              <h4 class="workspace-chat-title">Discuta este artigo</h4>
-              <p class="workspace-chat-hint">Tire dúvidas ou aprofunde sua compreensão com base nas evidências acima.</p>
-              <div class="workspace-chat-messages" id="workspace-chat-messages"></div>
-              <div class="workspace-chat-input-wrap">
-                <textarea id="workspace-chat-input" placeholder="Pergunte sobre o artigo..." rows="1"></textarea>
-                <button class="btn-send btn-workspace-send" id="workspace-send">
+              <!-- Bottom Line -->
+              <div class="te-bottom-line" id="te-bottom-line">
+                <div class="te-bl-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
-                </button>
+                </div>
+                <div class="te-bl-content">
+                  <span class="te-bl-label">PONTO-CHAVE</span>
+                  <p class="te-bl-text" id="te-bl-text">Em pacientes com reação anafilactoide prévia a contraste iodado, a pré-medicação com corticosteroide + anti-histamínico reduz a recorrência de reações graves de 20–60% para menos de 5%.</p>
+                </div>
               </div>
-            </div>
+
+              <!-- Evidence Cards -->
+              <div class="te-cards" id="te-cards">
+                <div class="te-card" data-card="acr">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">ACR / AAAAI Consensus</span>
+                      <span class="te-card-year">2024</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-high">GRADE Alta</span>
+                      <span class="te-badge te-badge-type">Consenso</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Management and Prevention of Hypersensitivity Reactions to Iodinated and Gadolinium-Based Contrast Media</h4>
+                  <p class="te-card-summary">Protocolo de pré-medicação com metilprednisolona 32mg (12h e 2h antes) + difenidramina 50mg (1h antes). Em emergência, hidrocortisona 200mg IV + difenidramina 50mg IV. Uso preferencial de contraste de baixa osmolalidade.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1016/j.jaci.2024.01.001">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1016/j.jaci.2024.01.001
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="te-card" data-card="nejm">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">NEJM Review</span>
+                      <span class="te-card-year">2023</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-mod">GRADE Moderada</span>
+                      <span class="te-badge te-badge-type">Revisão</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Contrast Media Reactions — Recognition, Prevention, and Treatment</h4>
+                  <p class="te-card-summary">Revisão abrangente das reações adversas a meios de contraste. Classifica reações em alérgicas (anafilactoides) e fisiológicas. Reforça que história prévia de reação aumenta risco em 5x. Recomenda teste cutâneo em casos selecionados.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1056/NEJMra2209665">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1056/NEJMra2209665
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="te-card" data-card="radiology">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">Radiology (RSNA)</span>
+                      <span class="te-card-year">2022</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-mod">GRADE Moderada</span>
+                      <span class="te-badge te-badge-type">Meta-análise</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Premedication vs No Premedication for Repeat Contrast Administration After Allergic-Like Reactions: A Systematic Review</h4>
+                  <p class="te-card-summary">Meta-análise de 12 estudos (n=4.825). Pré-medicação reduziu recorrência de 17,3% para 4,8% (OR 0,24; IC95% 0,15–0,38). Eficácia maior quando combinada com troca para contraste de baixa osmolalidade.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1148/radiol.220173">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1148/radiol.220173
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guidelines Comparator -->
+              <div class="te-comparator" id="te-comparator">
+                <h4 class="te-comp-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  Comparador de Diretrizes
+                </h4>
+                <div class="te-comp-table">
+                  <div class="te-comp-row te-comp-header-row">
+                    <div class="te-comp-cell te-comp-label"></div>
+                    <div class="te-comp-cell te-comp-col">🇺🇸 ACR/AAAAI</div>
+                    <div class="te-comp-cell te-comp-col">🇪🇺 ESUR</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Pré-medicação</div>
+                    <div class="te-comp-cell">Metilprednisolona 32mg (12h + 2h) + Difenidramina 50mg (1h)</div>
+                    <div class="te-comp-cell">Prednisolona 30mg (12h + 2h) ou Metilprednisolona IV em emergência</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Teste cutâneo</div>
+                    <div class="te-comp-cell">Opcional, considerar em reações graves</div>
+                    <div class="te-comp-cell">Recomendado antes de reexposição</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Troca de contraste</div>
+                    <div class="te-comp-cell">Preferir baixa osmolalidade + trocar agente</div>
+                    <div class="te-comp-cell">Obrigatório trocar agente; considerar gadolínio se possível</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Clinical Decision Tree -->
+              <div class="te-decision-tree" id="te-decision-tree">
+                <h4 class="te-dt-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="12" x2="6" y2="16"/><line x1="12" y1="12" x2="18" y2="16"/>
+                    <circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/>
+                  </svg>
+                  Árvore de Decisão Clínica
+                </h4>
+                <div class="te-dt-flow">
+                  <div class="te-dt-node te-dt-question te-dt-active" id="dt-node-1">
+                    <p>Paciente com reação prévia a contraste iodado necessita de novo exame com contraste?</p>
+                    <div class="te-dt-actions">
+                      <button class="te-dt-btn te-dt-yes" data-next="dt-node-2">Sim, exame essencial</button>
+                      <button class="te-dt-btn te-dt-no" data-next="dt-node-alt">Não, há alternativa</button>
+                    </div>
+                  </div>
+                  <div class="te-dt-node te-dt-question hidden" id="dt-node-2">
+                    <p>Reação prévia foi grave (anafilaxia, hipotensão, edema de glote)?</p>
+                    <div class="te-dt-actions">
+                      <button class="te-dt-btn te-dt-yes" data-next="dt-node-3a">Sim, grave</button>
+                      <button class="te-dt-btn te-dt-no" data-next="dt-node-3b">Não, leve/moderada</button>
+                    </div>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-3a">
+                    <span class="te-dt-badge te-dt-badge-danger">Alto risco</span>
+                    <p>Encaminhar a alergologista. Considerar dessensibilização. Se urgente: pré-medicação IV (hidrocortisona 200mg + difenidramina 50mg), trocar agente, equipe de emergência de plantão.</p>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-3b">
+                    <span class="te-dt-badge te-dt-badge-warn">Risco moderado</span>
+                    <p>Pré-medicação padrão (metilprednisolona 32mg 12h+2h antes + difenidramina 50mg 1h antes). Trocar agente de contraste. Manter acesso venoso e monitorização.</p>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-alt">
+                    <span class="te-dt-badge te-dt-badge-safe">Alternativa</span>
+                    <p>Considerar TC sem contraste, RM (se não contraindicada), ou US Doppler conforme indicação clínica. Neste caso: RM contraindicada (projétil ferromagnético). TC sem contraste é opção inicial para HSA.</p>
+                  </div>
+                  <button class="te-dt-reset hidden" id="te-dt-reset">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Recomeçar
+                  </button>
+                </div>
+              </div>
+
+              <!-- SUS Context (enhanced) -->
+              <div class="te-sus-context" id="te-sus-context">
+                <div class="te-sus-header">
+                  <span class="te-sus-flag">🇧🇷</span>
+                  <h4 class="te-sus-title">Contexto SUS / CONITEC</h4>
+                  <button class="te-sus-toggle" id="te-sus-toggle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                </div>
+                <div class="te-sus-body hidden" id="te-sus-body">
+                  <div class="te-sus-item">
+                    <strong>TC de crânio com contraste</strong>
+                    <span class="te-sus-status te-sus-available">Disponível no SUS</span>
+                    <p>Coberto quando há indicação clínica. Em HSA, TC sem contraste é o exame inicial de escolha.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Encaminhamento a alergologista</strong>
+                    <span class="te-sus-status te-sus-partial">Parcialmente disponível</span>
+                    <p>Rede de atenção especializada. Filas variam por região; priorizar reação prévia grave.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Dessensibilização</strong>
+                    <span class="te-sus-status te-sus-limited">Centros de referência</span>
+                    <p>Hospitais universitários e centros de alergia. Acesso via central de regulação.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Contraste de baixa osmolalidade</strong>
+                    <span class="te-sus-status te-sus-available">Disponível no SUS</span>
+                    <p>Disponível em muitos serviços. Na impossibilidade de dessensibilização, TC sem contraste quando suficiente.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Workspace article chat (keep existing) -->
+              <div class="workspace-chat">
+                <h4 class="workspace-chat-title">Discuta este artigo</h4>
+                <p class="workspace-chat-hint">Tire dúvidas ou aprofunde sua compreensão com base nas evidências acima.</p>
+                <div class="workspace-chat-messages" id="workspace-chat-messages"></div>
+                <div class="workspace-chat-input-wrap">
+                  <textarea id="workspace-chat-input" placeholder="Pergunte sobre o artigo..." rows="1"></textarea>
+                  <button class="btn-send btn-workspace-send" id="workspace-send">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="workspace-rol-wrap hidden" id="workspace-rol-wrap">
               <p class="workspace-rol-content" id="workspace-rol-content"></p>
@@ -2565,7 +3130,7 @@ body {
       record: 'Gravar', recording: 'Gravando', pause: 'Pausar', cont: 'Continuar', stop: 'Parar',
       discard: 'Descartar', finalize: 'Finalizar e gerar nota',
       searchPH: 'Nome ou número de documento do paciente',
-      templateTitle: 'Template da consulta',
+      templateTitle: 'Consulta atual',
       chiefLabel: 'Queixa principal:',
       chiefText: 'Cefaleia de início súbito há 3 dias, com sinais de alarme (rigidez de nuca, fotofobia).',
       hpiLabel: 'História da doença atual:',
@@ -2602,6 +3167,8 @@ body {
       blankPH: 'Pesquise evidências, diretrizes ou pergunte sobre o caso...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'Rol ANS', backChat: 'Voltar ao chat',
+      allergyLabel: 'Alergia',
+      allergyDetail: 'Contraste iodado — reação anafilactoide prévia',
       alertTitle: 'Alerta: Alergia a contraste iodado',
       alertDesc: 'Este paciente tem alergia a contraste iodado. Recomenda-se reconsiderar a prescrição de TC de crânio com contraste.',
       alertBtn: 'Ver evidências e conduta recomendada',
@@ -2667,13 +3234,70 @@ body {
       wsSug3Full: 'Quais exames de imagem são indicados na suspeita de hemorragia subaracnóidea?',
       wsSug4Label: 'Protocolo de pré-medicação para contraste',
       wsSug4Full: 'Qual o protocolo de pré-medicação para contraste iodado em pacientes alérgicos?',
+      teSubtitle: 'Medicina baseada em evidências em tempo real',
+      teSearchPH: 'Pesquisar evidências, diretrizes, protocolos...',
+      teChip1: 'Cefaleia em trovoada',
+      teChip1Query: 'Cefaleia em trovoada diagnóstico diferencial',
+      teChip2: 'Manejo de HSA',
+      teChip2Query: 'Hemorragia subaracnóidea manejo',
+      teChip3: 'Protocolo alergia a contraste',
+      teChip3Query: 'Alergia contraste iodado pré-medicação protocolo',
+      teChip4: 'Indicações TC de crânio',
+      teChip4Query: 'TC crânio indicações sinais de alarme cefaleia',
+      teBlLabel: 'PONTO-CHAVE',
+      teBlText: 'Em pacientes com reação anafilactoide prévia a contraste iodado, a pré-medicação com corticosteroide + anti-histamínico reduz a recorrência de reações graves de 20–60% para menos de 5%.',
+      teBadgeHigh: 'GRADE Alta',
+      teBadgeMod: 'GRADE Moderada',
+      teBadgeConsensus: 'Consenso',
+      teBadgeReview: 'Revisão',
+      teBadgeMeta: 'Meta-análise',
+      teCard1Summary: 'Protocolo de pré-medicação eficaz e seguro para reações anafilactoide. Estudo prospectivo com 250 pacientes alérgicos a contraste iodado mostrou redução de reações graves de 45% para 2% com o uso de corticosteroide + anti-histamínico. Recomenda-se iniciar 12 horas antes do procedimento.',
+      teCard2Summary: 'Consenso internacional revisado em 2023. Sugere avaliação por alergologista antes de procedimentos com contraste. Teste cutâneo recomendado para confirmar diagnóstico. Dessensibilização é o padrão ouro quando o exame é essencial e não há alternativa.',
+      teCard3Summary: 'Meta-análise de 42 estudos mostrando eficácia de dessensibilização em 96% dos casos. Protocolos de 12-14 etapas com doses crescentes têm baixa taxa de reações durante o procedimento. Reações leves ocorrem em ~15% dos casos, geralmente autolimitadas.',
+      teCompTitle: 'Comparador de Diretrizes',
+      teCompPremed: 'Pré-medicação',
+      teCompSkinTest: 'Teste cutâneo',
+      teCompSwitch: 'Troca de contraste',
+      teCompAcrPremed: 'Corticosteroide IV 30-50mg + anti-histamínico IV 50mg, 1h antes do procedimento',
+      teCompAcrSkin: 'Teste cutâneo recomendado quando há histórico de reação grave',
+      teCompAcrSwitch: 'Trocar para contraste não-iônico de baixa osmolalidade se teste negativo',
+      teCompEsurPremed: 'Corticosteroide oral 50mg + anti-histamínico 50mg, 12-24h antes',
+      teCompEsurSkin: 'Teste cutânico recomendado rotineiramente',
+      teCompEsurSwitch: 'Considerar alternativa de imagem sem contraste (TC sem contraste, RM, ultrassom)',
+      teDtTitle: 'Árvore de Decisão Clínica',
+      teDtQ1: 'Paciente com reação prévia a contraste iodado necessita de novo exame com contraste?',
+      teDtQ1Yes: 'Sim, exame essencial',
+      teDtQ1No: 'Não, há alternativa',
+      teDtQ2: 'Reação prévia foi grave (anafilaxia, hipotensão, edema de glote)?',
+      teDtQ2Yes: 'Sim, grave',
+      teDtQ2No: 'Não, leve/moderada',
+      teDtHighRisk: 'Alto risco',
+      teDtHighText: 'Dessensibilização obrigatória em 12-14 etapas. Realizar em ambiente hospitalar com monitoramento cardiológico. Ter epinefrina disponível.',
+      teDtModRisk: 'Risco moderado',
+      teDtModText: 'Pré-medicação com corticosteroide + anti-histamínico. Iniciar 12h antes. Monitoramento durante o procedimento.',
+      teDtAltBadge: 'Alternativa',
+      teDtAltText: 'Considerar exame sem contraste ou técnica alternativa (RM, ultrassom, ressonância). Consultar radiologista.',
+      teDtReset: 'Recomeçar',
+      teSusTitle: 'Contexto SUS / CONITEC',
+      teSusItem1Title: 'TC de crânio com contraste',
+      teSusItem1Status: 'Disponível no SUS',
+      teSusItem1Desc: 'Coberto pelo SUS quando há indicação clínica. Em suspeita de hemorragia subaracnóidea, a TC sem contraste pode ser realizada inicialmente; com contraste é reservada para casos selecionados.',
+      teSusItem2Title: 'Encaminhamento a alergologista',
+      teSusItem2Status: 'Parcialmente disponível',
+      teSusItem2Desc: 'Disponível na rede de atenção especializada. Algumas regiões têm fila; priorizar pacientes com reação prévia grave.',
+      teSusItem3Title: 'Dessensibilização',
+      teSusItem3Status: 'Centros de referência',
+      teSusItem3Desc: 'Realizada em centros de referência (ex.: hospitais universitários, centros de alergia). O acesso pode exigir regulamento via central de regulação.',
+      teSusItem4Title: 'Contraste de baixa osmolalidade',
+      teSusItem4Status: 'Disponível no SUS',
+      teSusItem4Desc: 'Meios de baixa osmolalidade disponíveis em muitos serviços. Na impossibilidade de dessensibilização, considerar alternativas (ex.: TC sem contraste quando suficiente para o diagnóstico).',
     },
     en: {
       consultType: 'General Adult Consultation',
       record: 'Record', recording: 'Recording', pause: 'Pause', cont: 'Resume', stop: 'Stop',
       discard: 'Discard', finalize: 'Finalize and generate note',
       searchPH: 'Patient name or document number',
-      templateTitle: 'Consultation template',
+      templateTitle: 'Current consultation',
       chiefLabel: 'Chief complaint:',
       chiefText: 'Sudden onset headache for 3 days, with alarm signs (neck stiffness, photophobia).',
       hpiLabel: 'History of present illness:',
@@ -2710,6 +3334,8 @@ body {
       blankPH: 'Search for evidence, guidelines, or ask about the case...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'ANS Coverage', backChat: 'Back to chat',
+      allergyLabel: 'Allergy',
+      allergyDetail: 'Iodinated contrast — prior anaphylactoid reaction',
       alertTitle: 'Alert: Iodinated contrast allergy',
       alertDesc: 'This patient has an allergy to iodinated contrast. Reconsider the prescription of head CT with contrast.',
       alertBtn: 'View evidence and recommended approach',
@@ -2775,13 +3401,70 @@ body {
       wsSug3Full: 'What imaging exams are indicated for suspected subarachnoid hemorrhage?',
       wsSug4Label: 'Contrast premedication protocol',
       wsSug4Full: 'What is the premedication protocol for iodinated contrast in allergic patients?',
+      teSubtitle: 'Evidence-based medicine in real time',
+      teSearchPH: 'Search evidence, guidelines, protocols...',
+      teChip1: 'Thunderclap headache',
+      teChip1Query: 'Thunderclap headache differential diagnosis',
+      teChip2: 'SAH management',
+      teChip2Query: 'Subarachnoid hemorrhage management',
+      teChip3: 'Contrast allergy protocol',
+      teChip3Query: 'Iodinated contrast allergy premedication protocol',
+      teChip4: 'Head CT indications',
+      teChip4Query: 'Head CT indications alarm signs headache',
+      teBlLabel: 'KEY POINT',
+      teBlText: 'In patients with prior anaphylactoid reaction to iodinated contrast, premedication with corticosteroid + antihistamine reduces recurrence of severe reactions from 20–60% to less than 5%.',
+      teBadgeHigh: 'GRADE High',
+      teBadgeMod: 'GRADE Moderate',
+      teBadgeConsensus: 'Consensus',
+      teBadgeReview: 'Review',
+      teBadgeMeta: 'Meta-analysis',
+      teCard1Summary: 'Effective and safe premedication protocol for anaphylactoid reactions. Prospective study with 250 patients allergic to iodinated contrast showed reduction in severe reactions from 45% to 2% using corticosteroid + antihistamine. Initiate 12 hours before the procedure.',
+      teCard2Summary: 'International consensus updated in 2023. Suggests allergist evaluation before procedures with contrast. Skin testing recommended to confirm diagnosis. Desensitization is the gold standard when the exam is essential and no alternative exists.',
+      teCard3Summary: 'Meta-analysis of 42 studies showing desensitization efficacy in 96% of cases. Protocols with 12-14 steps using escalating doses have low reaction rates during the procedure. Mild reactions occur in ~15% of cases, generally self-limiting.',
+      teCompTitle: 'Guidelines Comparator',
+      teCompPremed: 'Premedication',
+      teCompSkinTest: 'Skin test',
+      teCompSwitch: 'Contrast switching',
+      teCompAcrPremed: 'IV corticosteroid 30-50mg + IV antihistamine 50mg, 1h before procedure',
+      teCompAcrSkin: 'Skin testing recommended when there is history of severe reaction',
+      teCompAcrSwitch: 'Switch to non-ionic low-osmolality contrast if test is negative',
+      teCompEsurPremed: 'Oral corticosteroid 50mg + antihistamine 50mg, 12-24h before',
+      teCompEsurSkin: 'Skin testing recommended routinely',
+      teCompEsurSwitch: 'Consider alternative imaging without contrast (non-contrast CT, MRI, ultrasound)',
+      teDtTitle: 'Clinical Decision Tree',
+      teDtQ1: 'Does the patient with prior iodinated contrast reaction need a new exam with contrast?',
+      teDtQ1Yes: 'Yes, exam essential',
+      teDtQ1No: 'No, alternative available',
+      teDtQ2: 'Was the prior reaction severe (anaphylaxis, hypotension, laryngeal edema)?',
+      teDtQ2Yes: 'Yes, severe',
+      teDtQ2No: 'No, mild/moderate',
+      teDtHighRisk: 'High risk',
+      teDtHighText: 'Mandatory desensitization in 12-14 steps. Perform in hospital setting with cardiac monitoring. Have epinephrine available.',
+      teDtModRisk: 'Moderate risk',
+      teDtModText: 'Premedication with corticosteroid + antihistamine. Initiate 12h before. Monitor during procedure.',
+      teDtAltBadge: 'Alternative',
+      teDtAltText: 'Consider non-contrast exam or alternative technique (MRI, ultrasound, alternative imaging). Consult radiologist.',
+      teDtReset: 'Restart',
+      teSusTitle: 'SUS / CONITEC Context',
+      teSusItem1Title: 'Head CT with contrast',
+      teSusItem1Status: 'Available in SUS',
+      teSusItem1Desc: 'Covered by SUS when clinically indicated. In suspected subarachnoid hemorrhage, non-contrast CT may be performed first; contrast is reserved for selected cases.',
+      teSusItem2Title: 'Allergist referral',
+      teSusItem2Status: 'Partially available',
+      teSusItem2Desc: 'Available in the specialized care network. Some regions have waiting lists; prioritize patients with prior severe reactions.',
+      teSusItem3Title: 'Desensitization',
+      teSusItem3Status: 'Reference centers',
+      teSusItem3Desc: 'Performed at reference centers (e.g., university hospitals, allergy centers). Access may require regulation via central coordination.',
+      teSusItem4Title: 'Low-osmolality contrast',
+      teSusItem4Status: 'Available in SUS',
+      teSusItem4Desc: 'Low-osmolality agents available in many services. If desensitization is not possible, consider alternatives (e.g., non-contrast CT when sufficient).',
     },
     es: {
       consultType: 'Consulta General Adulto',
       record: 'Grabar', recording: 'Grabando', pause: 'Pausar', cont: 'Continuar', stop: 'Detener',
       discard: 'Descartar', finalize: 'Finalizar y generar nota',
       searchPH: 'Nombre o número de documento del paciente',
-      templateTitle: 'Plantilla de la consulta',
+      templateTitle: 'Consulta actual',
       chiefLabel: 'Queja principal:',
       chiefText: 'Cefalea de inicio súbito hace 3 días, con signos de alarma (rigidez de nuca, fotofobia).',
       hpiLabel: 'Historia de la enfermedad actual:',
@@ -2818,6 +3501,8 @@ body {
       blankPH: 'Busque evidencias, guías o pregunte sobre el caso...',
       intTitle: 'Telepatia Intelligence',
       rolAns: 'Cobertura ANS', backChat: 'Volver al chat',
+      allergyLabel: 'Alergia',
+      allergyDetail: 'Contraste yodado — reacción anafilactoide previa',
       alertTitle: 'Alerta: Alergia al contraste yodado',
       alertDesc: 'Este paciente tiene alergia al contraste yodado. Se recomienda reconsiderar la prescripción de TC de cráneo con contraste.',
       alertBtn: 'Ver evidencias y conducta recomendada',
@@ -2883,6 +3568,63 @@ body {
       wsSug3Full: '¿Qué exámenes de imagen están indicados en la sospecha de hemorragia subaracnoidea?',
       wsSug4Label: 'Protocolo de premedicación para contraste',
       wsSug4Full: '¿Cuál es el protocolo de premedicación para contraste yodado en pacientes alérgicos?',
+      teSubtitle: 'Medicina basada en evidencia en tiempo real',
+      teSearchPH: 'Buscar evidencias, guías, protocolos...',
+      teChip1: 'Cefalea en trueno',
+      teChip1Query: 'Cefalea en trueno diagnóstico diferencial',
+      teChip2: 'Manejo de HSA',
+      teChip2Query: 'Hemorragia subaracnoidea manejo',
+      teChip3: 'Protocolo alergia a contraste',
+      teChip3Query: 'Alergia contraste yodado premedicación protocolo',
+      teChip4: 'Indicaciones TC de cráneo',
+      teChip4Query: 'TC cráneo indicaciones signos de alarma cefalea',
+      teBlLabel: 'PUNTO CLAVE',
+      teBlText: 'En pacientes con reacción anafilactoide previa al contraste yodado, la premedicación con corticosteroide + antihistamínico reduce la recurrencia de reacciones graves del 20–60% a menos del 5%.',
+      teBadgeHigh: 'GRADE Alta',
+      teBadgeMod: 'GRADE Moderada',
+      teBadgeConsensus: 'Consenso',
+      teBadgeReview: 'Revisión',
+      teBadgeMeta: 'Metaanálisis',
+      teCard1Summary: 'Protocolo de premedicación eficaz y seguro para reacciones anafilactoide. Estudio prospectivo con 250 pacientes alérgicos al contraste yodado mostró reducción de reacciones graves del 45% al 2% con corticosteroide + antihistamínico. Se recomienda iniciar 12 horas antes del procedimiento.',
+      teCard2Summary: 'Consenso internacional revisado en 2023. Sugiere evaluación por alergólogo antes de procedimientos con contraste. Se recomienda prueba cutánea para confirmar el diagnóstico. La desensibilización es el estándar de oro cuando el examen es esencial y no hay alternativa.',
+      teCard3Summary: 'Metaanálisis de 42 estudios que muestra eficacia de desensibilización en el 96% de los casos. Los protocolos de 12-14 pasos con dosis crecientes tienen baja tasa de reacciones durante el procedimiento. Las reacciones leves ocurren en ~15% de los casos, generalmente autolimitadas.',
+      teCompTitle: 'Comparador de Directrices',
+      teCompPremed: 'Premedicación',
+      teCompSkinTest: 'Prueba cutánea',
+      teCompSwitch: 'Cambio de contraste',
+      teCompAcrPremed: 'Corticosteroide IV 30-50mg + antihistamínico IV 50mg, 1h antes del procedimiento',
+      teCompAcrSkin: 'Se recomienda prueba cutánea cuando hay historial de reacción grave',
+      teCompAcrSwitch: 'Cambiar a contraste no iónico de baja osmolalidad si la prueba es negativa',
+      teCompEsurPremed: 'Corticosteroide oral 50mg + antihistamínico 50mg, 12-24h antes',
+      teCompEsurSkin: 'Se recomienda prueba cutánea de forma rutinaria',
+      teCompEsurSwitch: 'Considerar alternativa de imagen sin contraste (TC sin contraste, RM, ecografía)',
+      teDtTitle: 'Árbol de Decisión Clínica',
+      teDtQ1: '¿El paciente con reacción previa al contraste yodado necesita un nuevo examen con contraste?',
+      teDtQ1Yes: 'Sí, examen esencial',
+      teDtQ1No: 'No, hay alternativa',
+      teDtQ2: '¿Fue grave la reacción previa (anafilaxia, hipotensión, edema laríngeo)?',
+      teDtQ2Yes: 'Sí, grave',
+      teDtQ2No: 'No, leve/moderada',
+      teDtHighRisk: 'Alto riesgo',
+      teDtHighText: 'Desensibilización obligatoria en 12-14 pasos. Realizar en ambiente hospitalario con monitoreo cardiológico. Tener epinefrina disponible.',
+      teDtModRisk: 'Riesgo moderado',
+      teDtModText: 'Premedicación con corticosteroide + antihistamínico. Iniciar 12h antes. Monitoreo durante el procedimiento.',
+      teDtAltBadge: 'Alternativa',
+      teDtAltText: 'Considerar examen sin contraste o técnica alternativa (RM, ecografía, imagen alternativa). Consultar radiólogo.',
+      teDtReset: 'Reiniciar',
+      teSusTitle: 'Contexto SUS / CONITEC',
+      teSusItem1Title: 'TC de cráneo con contraste',
+      teSusItem1Status: 'Disponible en el SUS',
+      teSusItem1Desc: 'Cubierto por el SUS cuando hay indicación clínica. En sospecha de hemorragia subaracnoidea, la TC sin contraste puede realizarse inicialmente; con contraste se reserva para casos seleccionados.',
+      teSusItem2Title: 'Derivación a alergólogo',
+      teSusItem2Status: 'Parcialmente disponible',
+      teSusItem2Desc: 'Disponible en la red de atención especializada. Algunas regiones tienen lista de espera; priorizar pacientes con reacción previa grave.',
+      teSusItem3Title: 'Desensibilización',
+      teSusItem3Status: 'Centros de referencia',
+      teSusItem3Desc: 'Realizada en centros de referencia (p. ej., hospitales universitarios, centros de alergia). El acceso puede requerir regulación a través de la coordinación central.',
+      teSusItem4Title: 'Contraste de baja osmolalidad',
+      teSusItem4Status: 'Disponible en el SUS',
+      teSusItem4Desc: 'Agentes de baja osmolalidad disponibles en muchos servicios. Si la desensibilización no es posible, considerar alternativas (p. ej., TC sin contraste cuando sea suficiente).',
     }
   };
 
@@ -3280,11 +4022,6 @@ body {
     workspaceRolWrap.classList.add('hidden');
     document.getElementById('workspace-blank-wrap')?.classList.add('hidden');
     refIconsBar.classList.remove('hidden');
-    gradeBar.classList.remove('hidden');
-    susBar?.classList.remove('hidden');
-    susContent?.classList.add('hidden');
-    susBtn?.classList.remove('expanded');
-    renderArticleSummary(true);
   }
 
   function closeWorkspace() {
@@ -3434,6 +4171,115 @@ body {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleWorkspaceSend(); }
   });
 
+  // ===== Allergy Badge expand/collapse =====
+  if (allergyBadge) {
+    allergyBadge.addEventListener('click', () => {
+      allergyBadge.classList.toggle('expanded');
+      const detail = document.getElementById('allergy-detail');
+      if (detail) detail.classList.toggle('hidden');
+    });
+  }
+
+  // ===== Telepatia Evidence Improvements =====
+
+  // TE Search - chip click fills search and opens blank workspace
+  document.querySelectorAll('.te-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const query = chip.dataset.query;
+      const searchInput = document.getElementById('te-search-input');
+      if (searchInput) searchInput.value = query;
+      // Open blank evidence workspace
+      if (typeof openBlankWorkspace === 'function') openBlankWorkspace();
+      const blankInput = document.getElementById('workspace-blank-input');
+      if (blankInput) { blankInput.value = query; blankInput.focus(); }
+    });
+  });
+
+  // TE Search input - Enter key opens blank workspace
+  const teSearchInput = document.getElementById('te-search-input');
+  if (teSearchInput) {
+    teSearchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && teSearchInput.value.trim()) {
+        e.preventDefault();
+        if (typeof openBlankWorkspace === 'function') openBlankWorkspace();
+        const blankInput = document.getElementById('workspace-blank-input');
+        if (blankInput) { blankInput.value = teSearchInput.value.trim(); blankInput.focus(); }
+      }
+    });
+  }
+
+  // Decision tree navigation
+  document.querySelectorAll('.te-dt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nextId = btn.dataset.next;
+      const currentNode = btn.closest('.te-dt-node');
+      if (currentNode) {
+        currentNode.classList.remove('te-dt-active');
+        currentNode.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = true);
+        currentNode.style.opacity = '0.6';
+      }
+      const nextNode = document.getElementById(nextId);
+      if (nextNode) {
+        nextNode.classList.remove('hidden');
+        nextNode.classList.add('te-dt-active');
+      }
+      const resetBtn = document.getElementById('te-dt-reset');
+      if (resetBtn) resetBtn.classList.remove('hidden');
+    });
+  });
+
+  // Decision tree reset
+  const dtReset = document.getElementById('te-dt-reset');
+  if (dtReset) {
+    dtReset.addEventListener('click', () => {
+      document.querySelectorAll('.te-dt-node').forEach(node => {
+        if (node.id === 'dt-node-1') {
+          node.classList.remove('hidden');
+          node.classList.add('te-dt-active');
+          node.style.opacity = '1';
+          node.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = false);
+        } else {
+          node.classList.add('hidden');
+          node.classList.remove('te-dt-active');
+          node.style.opacity = '1';
+          node.querySelectorAll('.te-dt-btn').forEach(b => b.disabled = false);
+        }
+      });
+      dtReset.classList.add('hidden');
+    });
+  }
+
+  // SUS context toggle
+  const susToggle = document.getElementById('te-sus-toggle');
+  const susBody = document.getElementById('te-sus-body');
+  const susHeader = document.querySelector('.te-sus-header');
+  if (susToggle && susBody && susHeader) {
+    susHeader.addEventListener('click', () => {
+      susBody.classList.toggle('hidden');
+      susToggle.classList.toggle('expanded');
+    });
+  }
+
+  // Card expand toggle
+  document.querySelectorAll('.te-card-expand').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.te-card');
+      const summary = card.querySelector('.te-card-summary');
+      if (summary) {
+        if (summary.style.maxHeight) {
+          summary.style.maxHeight = null;
+          summary.style.whiteSpace = null;
+          btn.classList.remove('expanded');
+        } else {
+          summary.style.maxHeight = 'none';
+          summary.style.whiteSpace = 'normal';
+          btn.classList.add('expanded');
+        }
+      }
+    });
+  });
+
   // ===== FIX: Make ALL suggestion buttons functional =====
   const suggestionBtns = document.querySelectorAll('.suggestions .suggestion-btn');
   suggestionBtns.forEach((btn) => {
@@ -3523,6 +4369,12 @@ body {
     const discardBtn = document.querySelector('.btn-discard');
     if (discardBtn) discardBtn.textContent = t('discard');
     setBtnText(document.querySelector('.btn-finalize'), t('finalize'));
+
+    // Allergy badge
+    const allergyLabelEl = document.querySelector('.allergy-badge-label');
+    if (allergyLabelEl) allergyLabelEl.textContent = t('allergyLabel');
+    const allergyDetailEl = document.getElementById('allergy-detail');
+    if (allergyDetailEl) allergyDetailEl.textContent = t('allergyDetail');
 
     // ---- Scribe pane ----
     const searchInput = document.querySelector('.search-input');
@@ -3731,6 +4583,127 @@ body {
     });
     const lpFooter = document.querySelector('.lgpd-footer');
     if (lpFooter) lpFooter.textContent = t('lgpdFooter');
+
+    // ---- TE Components (Telepatia Evidence) ----
+
+    // TE Empty State
+    const teSubtitleEl = document.querySelector('.workspace-empty .te-subtitle');
+    if (teSubtitleEl) teSubtitleEl.textContent = t('teSubtitle');
+    const teSearchInputEl = document.querySelector('.te-search-input');
+    if (teSearchInputEl) teSearchInputEl.placeholder = t('teSearchPH');
+
+    // TE Chips
+    const teChips = document.querySelectorAll('.te-chip');
+    teChips.forEach((chip, i) => {
+      const chipKey = `teChip${i + 1}`;
+      const queryKey = `teChip${i + 1}Query`;
+      if (t(chipKey)) chip.textContent = t(chipKey);
+      if (t(queryKey)) chip.dataset.query = t(queryKey);
+    });
+
+    // TE Bottom Line
+    const teBlLabelEl = document.querySelector('.te-bl-label');
+    if (teBlLabelEl) teBlLabelEl.textContent = t('teBlLabel');
+    const teBlTextEl = document.querySelector('.te-bl-text');
+    if (teBlTextEl) teBlTextEl.textContent = t('teBlText');
+
+    // TE Badge Labels (match actual HTML classes: te-badge-grade-high, te-badge-grade-mod, te-badge-type)
+    document.querySelectorAll('.te-badge-grade-high').forEach(el => { el.textContent = t('teBadgeHigh'); });
+    document.querySelectorAll('.te-badge-grade-mod').forEach(el => { el.textContent = t('teBadgeMod'); });
+    // te-badge-type: per-card badge (Consenso, Revisão, Meta-análise)
+    const teCardBadgeTypes = document.querySelectorAll('.te-card .te-badge-type');
+    const teCardBadgeKeys = ['teBadgeConsensus', 'teBadgeReview', 'teBadgeMeta'];
+    teCardBadgeTypes.forEach((el, i) => { if (teCardBadgeKeys[i]) el.textContent = t(teCardBadgeKeys[i]); });
+
+    // TE Evidence Cards — summaries
+    const teCards = document.querySelectorAll('.te-card');
+    teCards.forEach((card, i) => {
+      const summaryEl = card.querySelector('.te-card-summary');
+      if (summaryEl) summaryEl.textContent = t(`teCard${i + 1}Summary`);
+    });
+
+    // TE Guidelines Comparator (h4.te-comp-title has SVG inside, use setBtnText)
+    setBtnText(document.querySelector('.te-comp-title'), t('teCompTitle'));
+
+    // Comparator data rows (skip header row): each row has .te-comp-label + 2 data cells
+    const teCompRows = document.querySelectorAll('.te-comp-row:not(.te-comp-header-row)');
+    const compRowKeys = [
+      ['teCompPremed', 'teCompAcrPremed', 'teCompEsurPremed'],
+      ['teCompSkinTest', 'teCompAcrSkin', 'teCompEsurSkin'],
+      ['teCompSwitch', 'teCompAcrSwitch', 'teCompEsurSwitch']
+    ];
+    teCompRows.forEach((row, i) => {
+      if (!compRowKeys[i]) return;
+      const cells = row.querySelectorAll('.te-comp-cell');
+      // cell 0 = label, cell 1 = ACR, cell 2 = ESUR
+      if (cells[0]) cells[0].textContent = t(compRowKeys[i][0]);
+      if (cells[1]) cells[1].textContent = t(compRowKeys[i][1]);
+      if (cells[2]) cells[2].textContent = t(compRowKeys[i][2]);
+    });
+
+    // TE Clinical Decision Tree (h4.te-dt-title has SVG inside, use setBtnText)
+    setBtnText(document.querySelector('.te-dt-title'), t('teDtTitle'));
+
+    // Node 1: id="dt-node-1"
+    const dtNode1 = document.getElementById('dt-node-1');
+    if (dtNode1) {
+      const q1p = dtNode1.querySelector('p');
+      if (q1p) q1p.textContent = t('teDtQ1');
+      const q1btns = dtNode1.querySelectorAll('.te-dt-btn');
+      if (q1btns[0]) q1btns[0].textContent = t('teDtQ1Yes');
+      if (q1btns[1]) q1btns[1].textContent = t('teDtQ1No');
+    }
+
+    // Node 2: id="dt-node-2"
+    const dtNode2 = document.getElementById('dt-node-2');
+    if (dtNode2) {
+      const q2p = dtNode2.querySelector('p');
+      if (q2p) q2p.textContent = t('teDtQ2');
+      const q2btns = dtNode2.querySelectorAll('.te-dt-btn');
+      if (q2btns[0]) q2btns[0].textContent = t('teDtQ2Yes');
+      if (q2btns[1]) q2btns[1].textContent = t('teDtQ2No');
+    }
+
+    // Decision outcomes: id="dt-node-3a" (high risk), "dt-node-3b" (mod risk), "dt-node-alt"
+    const dtNode3a = document.getElementById('dt-node-3a');
+    if (dtNode3a) {
+      const badge3a = dtNode3a.querySelector('.te-dt-badge');
+      if (badge3a) badge3a.textContent = t('teDtHighRisk');
+      const text3a = dtNode3a.querySelector('p');
+      if (text3a) text3a.textContent = t('teDtHighText');
+    }
+    const dtNode3b = document.getElementById('dt-node-3b');
+    if (dtNode3b) {
+      const badge3b = dtNode3b.querySelector('.te-dt-badge');
+      if (badge3b) badge3b.textContent = t('teDtModRisk');
+      const text3b = dtNode3b.querySelector('p');
+      if (text3b) text3b.textContent = t('teDtModText');
+    }
+    const dtNodeAlt = document.getElementById('dt-node-alt');
+    if (dtNodeAlt) {
+      const badgeAlt = dtNodeAlt.querySelector('.te-dt-badge');
+      if (badgeAlt) badgeAlt.textContent = t('teDtAltBadge');
+      const textAlt = dtNodeAlt.querySelector('p');
+      if (textAlt) textAlt.textContent = t('teDtAltText');
+    }
+
+    // Reset button: id="te-dt-reset"
+    setBtnText(document.getElementById('te-dt-reset'), t('teDtReset'));
+
+    // TE SUS Context
+    const teSusTitleEl = document.querySelector('.te-sus-title');
+    if (teSusTitleEl) teSusTitleEl.textContent = t('teSusTitle');
+
+    const teSusItems = document.querySelectorAll('.te-sus-item');
+    teSusItems.forEach((item, i) => {
+      const idx = i + 1;
+      const titleEl = item.querySelector('strong');
+      const statusEl = item.querySelector('.te-sus-status');
+      const descEl = item.querySelector('p');
+      if (titleEl) titleEl.textContent = t(`teSusItem${idx}Title`);
+      if (statusEl) statusEl.textContent = t(`teSusItem${idx}Status`);
+      if (descEl) descEl.textContent = t(`teSusItem${idx}Desc`);
+    });
 
     // Re-render article summary if it's currently visible
     if (!workspaceSummaryWrap?.classList.contains('hidden')) {

@@ -1041,14 +1041,58 @@ body {
   font-weight: 600;
   background: var(--danger);
   color: white;
+  border: none;
   border-radius: 20px;
   animation: badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: default;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  max-width: 110px;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.allergy-badge:hover {
+  background: #b91c1c;
+}
+
+.allergy-badge.expanded {
+  max-width: 500px;
+  border-radius: 8px;
+  padding: 0.3rem 0.7rem;
 }
 
 .allergy-badge svg {
   stroke: white;
   flex-shrink: 0;
+}
+
+.allergy-chevron {
+  transition: transform 0.25s ease;
+  margin-left: 0.1rem;
+}
+
+.allergy-badge.expanded .allergy-chevron {
+  transform: rotate(180deg);
+}
+
+.allergy-badge-detail {
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease, max-width 0.3s ease;
+}
+
+.allergy-badge-detail::before {
+  content: '—';
+  margin: 0 0.3rem;
+  opacity: 0.6;
+}
+
+.allergy-badge.expanded .allergy-badge-detail {
+  opacity: 1;
+  max-width: 350px;
 }
 
 @keyframes badge-pop {
@@ -1954,6 +1998,338 @@ body {
   color: var(--accent);
   font-weight: 600;
 }
+
+/* ===== Telepatia Evidence Improvements ===== */
+
+/* TE Empty state - Search */
+.te-logo {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
+  color: white; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.te-subtitle {
+  font-size: 0.85rem; color: var(--text-muted); margin-top: -0.25rem;
+}
+
+.te-search-wrap {
+  position: relative; width: 100%; max-width: 480px; margin-top: 1rem;
+}
+
+.te-search-icon {
+  position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+}
+
+.te-search-input {
+  width: 100%; padding: 0.75rem 1rem 0.75rem 2.75rem;
+  font-size: 0.95rem; border: 2px solid var(--border); border-radius: 12px;
+  font-family: var(--font-sans); background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.te-search-input:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-light), 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.te-search-input::placeholder { color: #94a3b8; }
+
+.te-suggestions {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  justify-content: center; margin-top: 1rem; max-width: 520px;
+}
+
+.te-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.45rem 0.85rem; font-size: 0.8rem;
+  background: white; border: 1px solid var(--border); border-radius: 20px;
+  color: var(--text); cursor: pointer; font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.te-chip:hover {
+  background: var(--accent-light); border-color: var(--accent);
+  transform: translateY(-1px); box-shadow: 0 2px 8px rgba(34,197,94,0.15);
+}
+
+.te-chip-icon { font-size: 0.9em; }
+
+/* TE Bottom Line */
+.te-bottom-line {
+  display: flex; gap: 0.75rem; padding: 1rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1px solid #bbf7d0; border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.te-bl-icon {
+  flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--accent); color: white;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.te-bl-label {
+  display: block; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.te-bl-text {
+  font-size: 0.9rem; line-height: 1.55; color: var(--text);
+  font-weight: 500; margin: 0;
+}
+
+/* TE Evidence Cards */
+.te-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+
+.te-card {
+  background: white; border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 0.85rem 1rem; transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+
+.te-card:hover {
+  border-color: var(--accent); box-shadow: 0 2px 12px rgba(34,197,94,0.1);
+}
+
+.te-card-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.35rem;
+}
+
+.te-card-source { display: flex; align-items: center; gap: 0.5rem; }
+
+.te-card-journal {
+  font-size: 0.75rem; font-weight: 600; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+.te-card-year {
+  font-size: 0.7rem; color: var(--text-muted);
+  background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 4px;
+}
+
+.te-card-badges { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+.te-badge {
+  display: inline-flex; align-items: center;
+  padding: 0.15rem 0.5rem; font-size: 0.65rem; font-weight: 600;
+  border-radius: 10px; letter-spacing: 0.02em;
+}
+
+.te-badge-grade-high { background: #dcfce7; color: #166534; }
+.te-badge-grade-mod { background: #fef3c7; color: #92400e; }
+.te-badge-grade-low { background: #fee2e2; color: #991b1b; }
+.te-badge-type { background: #eff6ff; color: #1e40af; }
+
+.te-card-title {
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  line-height: 1.4; margin: 0 0 0.35rem;
+}
+
+.te-card-summary {
+  font-size: 0.8rem; line-height: 1.55; color: var(--text-muted); margin: 0 0 0.5rem;
+}
+
+.te-card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.te-card-cite {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.7rem; color: var(--text-muted); cursor: pointer;
+  transition: color 0.15s;
+}
+
+.te-card-cite:hover { color: var(--accent); }
+
+.te-card-expand {
+  width: 24px; height: 24px; border: 1px solid var(--border);
+  background: white; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); transition: all 0.15s;
+}
+
+.te-card-expand:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: var(--accent-light);
+}
+
+.te-card-expand.expanded svg { transform: rotate(180deg); }
+
+/* TE Guidelines Comparator */
+.te-comparator { margin-bottom: 1rem; }
+
+.te-comp-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.te-comp-title svg { color: var(--accent); }
+
+.te-comp-table {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; font-size: 0.78rem;
+}
+
+.te-comp-row {
+  display: grid; grid-template-columns: 130px 1fr 1fr;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.te-comp-row:last-child { border-bottom: none; }
+
+.te-comp-header-row {
+  background: #f8fafc; font-weight: 600; color: var(--text);
+}
+
+.te-comp-cell {
+  padding: 0.5rem 0.65rem; line-height: 1.45; color: var(--text-muted);
+}
+
+.te-comp-label {
+  font-weight: 600; color: var(--text); background: #fafafa;
+  border-right: 1px solid #f1f5f9;
+}
+
+.te-comp-col {
+  text-align: center; font-size: 0.75rem;
+}
+
+/* TE Clinical Decision Tree */
+.te-decision-tree { margin-bottom: 1rem; }
+
+.te-dt-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 600; color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.te-dt-title svg { color: #7c3aed; }
+
+.te-dt-flow { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.te-dt-node {
+  padding: 0.75rem 1rem; border-radius: var(--radius);
+  animation: item-fade-in 0.3s ease-out;
+}
+
+.te-dt-node.hidden { display: none !important; }
+
+.te-dt-question {
+  background: #faf5ff; border: 1px solid #e9d5ff;
+}
+
+.te-dt-question p {
+  font-size: 0.85rem; font-weight: 500; color: var(--text);
+  margin: 0 0 0.5rem; line-height: 1.45;
+}
+
+.te-dt-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.te-dt-btn {
+  padding: 0.4rem 0.85rem; font-size: 0.78rem; font-weight: 500;
+  border: 1px solid var(--border); border-radius: 20px;
+  cursor: pointer; font-family: var(--font-sans);
+  transition: all 0.15s;
+}
+
+.te-dt-yes {
+  background: #fef2f2; color: #991b1b; border-color: #fecaca;
+}
+.te-dt-yes:hover { background: #fee2e2; border-color: #fca5a5; }
+
+.te-dt-no {
+  background: #f0fdf4; color: #166534; border-color: #bbf7d0;
+}
+.te-dt-no:hover { background: #dcfce7; border-color: #86efac; }
+
+.te-dt-answer {
+  background: white; border: 1px solid var(--border);
+}
+
+.te-dt-answer p {
+  font-size: 0.82rem; line-height: 1.55; color: var(--text); margin: 0.4rem 0 0;
+}
+
+.te-dt-badge {
+  display: inline-block; padding: 0.15rem 0.5rem;
+  font-size: 0.65rem; font-weight: 700; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.te-dt-badge-danger { background: #fee2e2; color: #991b1b; }
+.te-dt-badge-warn { background: #fef3c7; color: #92400e; }
+.te-dt-badge-safe { background: #dcfce7; color: #166534; }
+
+.te-dt-reset {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.75rem; font-size: 0.78rem;
+  background: #f8fafc; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); cursor: pointer;
+  font-family: var(--font-sans); color: var(--text-muted);
+  transition: all 0.15s; align-self: flex-start;
+}
+
+.te-dt-reset:hover { background: #f1f5f9; color: var(--text); }
+
+.te-dt-reset.hidden { display: none !important; }
+
+/* TE SUS Context */
+.te-sus-context {
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem;
+}
+
+.te-sus-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1rem; cursor: pointer;
+}
+
+.te-sus-flag { font-size: 1.1em; }
+
+.te-sus-title {
+  flex: 1; font-size: 0.82rem; font-weight: 600; color: #166534; margin: 0;
+}
+
+.te-sus-toggle {
+  width: 24px; height: 24px; border: none; background: transparent;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  color: #166534; transition: transform 0.2s;
+}
+
+.te-sus-toggle.expanded svg { transform: rotate(180deg); }
+
+.te-sus-body { padding: 0 1rem 0.75rem; }
+
+.te-sus-body.hidden { display: none !important; }
+
+.te-sus-item {
+  padding: 0.5rem 0; border-bottom: 1px solid #bbf7d0;
+}
+
+.te-sus-item:last-child { border-bottom: none; }
+
+.te-sus-item strong {
+  display: block; font-size: 0.8rem; color: var(--text); margin-bottom: 0.15rem;
+}
+
+.te-sus-item p {
+  font-size: 0.75rem; line-height: 1.45; color: var(--text-muted); margin: 0.2rem 0 0;
+}
+
+.te-sus-status {
+  display: inline-block; padding: 0.1rem 0.45rem;
+  font-size: 0.6rem; font-weight: 600; border-radius: 8px;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+.te-sus-available { background: #dcfce7; color: #166534; }
+.te-sus-partial { background: #fef3c7; color: #92400e; }
+.te-sus-limited { background: #fee2e2; color: #991b1b; }
 
 @media (max-width: 1100px) {
   .main-grid {

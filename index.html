@@ -32,14 +32,18 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
             Parar
           </button>
-          <span class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
+          <button class="allergy-badge hidden" id="allergy-badge" title="Alergia a contraste iodado">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
               <line x1="12" y1="9" x2="12" y2="13"/>
               <line x1="12" y1="17" x2="12.01" y2="17"/>
             </svg>
-            Alergia
-          </span>
+            <span class="allergy-badge-label">Alergia</span>
+            <span class="allergy-badge-detail hidden" id="allergy-detail">Contraste iodado — reação anafilactoide prévia</span>
+            <svg class="allergy-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
         </div>
       </div>
       <div class="header-right">
@@ -86,7 +90,7 @@
         </div>
 
         <div class="checklist-container">
-          <h3 class="checklist-title">Template da consulta</h3>
+          <h3 class="checklist-title">Consulta atual</h3>
           <ul class="checklist">
             <li class="checklist-item hidden" data-section="chief">
               <span class="check-icon loading"><span class="spinner"></span></span>
@@ -140,14 +144,19 @@
       <!-- Center: Telepatia Intelligence workspace -->
       <section class="workspace-pane" id="workspace-pane">
         <div class="workspace-empty" id="workspace-empty">
-          <p class="workspace-empty-title">Telepatia Evidence</p>
-          <p>Explore artigos, diretrizes e referências confiáveis (NEJM, JAMA, ABN) sugeridos pelo chat.</p>
-          <button class="btn-new-evidence" id="btn-new-evidence">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <div class="te-logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
             </svg>
-            Nova pesquisa de evidências
-          </button>
+          </div>
+          <p class="workspace-empty-title">Telepatia Evidence</p>
+          <p class="te-subtitle">Medicina baseada em evidências em tempo real</p>
+          <div class="te-search-wrap">
+            <svg class="te-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" class="te-search-input" id="te-search-input" placeholder="Pesquisar evidências, diretrizes, protocolos...">
+          </div>
         </div>
         <div class="workspace-content hidden" id="workspace-content">
           <div class="workspace-header">
@@ -206,38 +215,218 @@
           </div>
           <div class="workspace-body">
             <div class="workspace-summary-wrap" id="workspace-summary-wrap">
-              <div class="workspace-summary" id="workspace-summary">
-                <p class="summary-explanation" id="summary-explanation"></p>
-                <div class="summary-actions">
-                  <strong>Ações para o médico:</strong>
-                  <ul id="summary-actions-list"></ul>
-                </div>
-                <button class="btn-go-deeper" id="btn-go-deeper">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 15l-6-6-6 6"/>
-                  </svg>
-                  <span class="btn-go-deeper-text">Aprofundar: resultados, estatísticas e metodologia</span>
-                </button>
-                <div class="summary-deeper hidden" id="summary-deeper">
-                  <h5>Metodologia</h5>
-                  <p id="deeper-methodology"></p>
-                  <h5>Resultados e dados estatísticos</h5>
-                  <p id="deeper-results"></p>
-                </div>
-              </div>
-              <div class="workspace-chat">
-              <h4 class="workspace-chat-title">Discuta este artigo</h4>
-              <p class="workspace-chat-hint">Tire dúvidas ou aprofunde sua compreensão com base nas evidências acima.</p>
-              <div class="workspace-chat-messages" id="workspace-chat-messages"></div>
-              <div class="workspace-chat-input-wrap">
-                <textarea id="workspace-chat-input" placeholder="Pergunte sobre o artigo..." rows="1"></textarea>
-                <button class="btn-send btn-workspace-send" id="workspace-send">
+              <!-- Bottom Line -->
+              <div class="te-bottom-line" id="te-bottom-line">
+                <div class="te-bl-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
                   </svg>
-                </button>
+                </div>
+                <div class="te-bl-content">
+                  <span class="te-bl-label">PONTO-CHAVE</span>
+                  <p class="te-bl-text" id="te-bl-text">Em pacientes com reação anafilactoide prévia a contraste iodado, a pré-medicação com corticosteroide + anti-histamínico reduz a recorrência de reações graves de 20–60% para menos de 5%.</p>
+                </div>
               </div>
-            </div>
+
+              <!-- Evidence Cards -->
+              <div class="te-cards" id="te-cards">
+                <div class="te-card" data-card="acr">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">ACR / AAAAI Consensus</span>
+                      <span class="te-card-year">2024</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-high">GRADE Alta</span>
+                      <span class="te-badge te-badge-type">Consenso</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Management and Prevention of Hypersensitivity Reactions to Iodinated and Gadolinium-Based Contrast Media</h4>
+                  <p class="te-card-summary">Protocolo de pré-medicação com metilprednisolona 32mg (12h e 2h antes) + difenidramina 50mg (1h antes). Em emergência, hidrocortisona 200mg IV + difenidramina 50mg IV. Uso preferencial de contraste de baixa osmolalidade.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1016/j.jaci.2024.01.001">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1016/j.jaci.2024.01.001
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="te-card" data-card="nejm">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">NEJM Review</span>
+                      <span class="te-card-year">2023</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-mod">GRADE Moderada</span>
+                      <span class="te-badge te-badge-type">Revisão</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Contrast Media Reactions — Recognition, Prevention, and Treatment</h4>
+                  <p class="te-card-summary">Revisão abrangente das reações adversas a meios de contraste. Classifica reações em alérgicas (anafilactoides) e fisiológicas. Reforça que história prévia de reação aumenta risco em 5x. Recomenda teste cutâneo em casos selecionados.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1056/NEJMra2209665">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1056/NEJMra2209665
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="te-card" data-card="radiology">
+                  <div class="te-card-header">
+                    <div class="te-card-source">
+                      <span class="te-card-journal">Radiology (RSNA)</span>
+                      <span class="te-card-year">2022</span>
+                    </div>
+                    <div class="te-card-badges">
+                      <span class="te-badge te-badge-grade-mod">GRADE Moderada</span>
+                      <span class="te-badge te-badge-type">Meta-análise</span>
+                    </div>
+                  </div>
+                  <h4 class="te-card-title">Premedication vs No Premedication for Repeat Contrast Administration After Allergic-Like Reactions: A Systematic Review</h4>
+                  <p class="te-card-summary">Meta-análise de 12 estudos (n=4.825). Pré-medicação reduziu recorrência de 17,3% para 4,8% (OR 0,24; IC95% 0,15–0,38). Eficácia maior quando combinada com troca para contraste de baixa osmolalidade.</p>
+                  <div class="te-card-footer">
+                    <span class="te-card-cite" data-doi="10.1148/radiol.220173">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                      DOI: 10.1148/radiol.220173
+                    </span>
+                    <button class="te-card-expand" title="Expandir">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guidelines Comparator -->
+              <div class="te-comparator" id="te-comparator">
+                <h4 class="te-comp-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  Comparador de Diretrizes
+                </h4>
+                <div class="te-comp-table">
+                  <div class="te-comp-row te-comp-header-row">
+                    <div class="te-comp-cell te-comp-label"></div>
+                    <div class="te-comp-cell te-comp-col">🇺🇸 ACR/AAAAI</div>
+                    <div class="te-comp-cell te-comp-col">🇪🇺 ESUR</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Pré-medicação</div>
+                    <div class="te-comp-cell">Metilprednisolona 32mg (12h + 2h) + Difenidramina 50mg (1h)</div>
+                    <div class="te-comp-cell">Prednisolona 30mg (12h + 2h) ou Metilprednisolona IV em emergência</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Teste cutâneo</div>
+                    <div class="te-comp-cell">Opcional, considerar em reações graves</div>
+                    <div class="te-comp-cell">Recomendado antes de reexposição</div>
+                  </div>
+                  <div class="te-comp-row">
+                    <div class="te-comp-cell te-comp-label">Troca de contraste</div>
+                    <div class="te-comp-cell">Preferir baixa osmolalidade + trocar agente</div>
+                    <div class="te-comp-cell">Obrigatório trocar agente; considerar gadolínio se possível</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Clinical Decision Tree -->
+              <div class="te-decision-tree" id="te-decision-tree">
+                <h4 class="te-dt-title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="12" x2="6" y2="16"/><line x1="12" y1="12" x2="18" y2="16"/>
+                    <circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/>
+                  </svg>
+                  Árvore de Decisão Clínica
+                </h4>
+                <div class="te-dt-flow">
+                  <div class="te-dt-node te-dt-question te-dt-active" id="dt-node-1">
+                    <p>Paciente com reação prévia a contraste iodado necessita de novo exame com contraste?</p>
+                    <div class="te-dt-actions">
+                      <button class="te-dt-btn te-dt-yes" data-next="dt-node-2">Sim, exame essencial</button>
+                      <button class="te-dt-btn te-dt-no" data-next="dt-node-alt">Não, há alternativa</button>
+                    </div>
+                  </div>
+                  <div class="te-dt-node te-dt-question hidden" id="dt-node-2">
+                    <p>Reação prévia foi grave (anafilaxia, hipotensão, edema de glote)?</p>
+                    <div class="te-dt-actions">
+                      <button class="te-dt-btn te-dt-yes" data-next="dt-node-3a">Sim, grave</button>
+                      <button class="te-dt-btn te-dt-no" data-next="dt-node-3b">Não, leve/moderada</button>
+                    </div>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-3a">
+                    <span class="te-dt-badge te-dt-badge-danger">Alto risco</span>
+                    <p>Encaminhar a alergologista. Considerar dessensibilização. Se urgente: pré-medicação IV (hidrocortisona 200mg + difenidramina 50mg), trocar agente, equipe de emergência de plantão.</p>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-3b">
+                    <span class="te-dt-badge te-dt-badge-warn">Risco moderado</span>
+                    <p>Pré-medicação padrão (metilprednisolona 32mg 12h+2h antes + difenidramina 50mg 1h antes). Trocar agente de contraste. Manter acesso venoso e monitorização.</p>
+                  </div>
+                  <div class="te-dt-node te-dt-answer hidden" id="dt-node-alt">
+                    <span class="te-dt-badge te-dt-badge-safe">Alternativa</span>
+                    <p>Considerar TC sem contraste, RM (se não contraindicada), ou US Doppler conforme indicação clínica. Neste caso: RM contraindicada (projétil ferromagnético). TC sem contraste é opção inicial para HSA.</p>
+                  </div>
+                  <button class="te-dt-reset hidden" id="te-dt-reset">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                    Recomeçar
+                  </button>
+                </div>
+              </div>
+
+              <!-- SUS Context (enhanced) -->
+              <div class="te-sus-context" id="te-sus-context">
+                <div class="te-sus-header">
+                  <span class="te-sus-flag">🇧🇷</span>
+                  <h4 class="te-sus-title">Contexto SUS / CONITEC</h4>
+                  <button class="te-sus-toggle" id="te-sus-toggle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                </div>
+                <div class="te-sus-body hidden" id="te-sus-body">
+                  <div class="te-sus-item">
+                    <strong>TC de crânio com contraste</strong>
+                    <span class="te-sus-status te-sus-available">Disponível no SUS</span>
+                    <p>Coberto quando há indicação clínica. Em HSA, TC sem contraste é o exame inicial de escolha.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Encaminhamento a alergologista</strong>
+                    <span class="te-sus-status te-sus-partial">Parcialmente disponível</span>
+                    <p>Rede de atenção especializada. Filas variam por região; priorizar reação prévia grave.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Dessensibilização</strong>
+                    <span class="te-sus-status te-sus-limited">Centros de referência</span>
+                    <p>Hospitais universitários e centros de alergia. Acesso via central de regulação.</p>
+                  </div>
+                  <div class="te-sus-item">
+                    <strong>Contraste de baixa osmolalidade</strong>
+                    <span class="te-sus-status te-sus-available">Disponível no SUS</span>
+                    <p>Disponível em muitos serviços. Na impossibilidade de dessensibilização, TC sem contraste quando suficiente.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Workspace article chat (keep existing) -->
+              <div class="workspace-chat">
+                <h4 class="workspace-chat-title">Discuta este artigo</h4>
+                <p class="workspace-chat-hint">Tire dúvidas ou aprofunde sua compreensão com base nas evidências acima.</p>
+                <div class="workspace-chat-messages" id="workspace-chat-messages"></div>
+                <div class="workspace-chat-input-wrap">
+                  <textarea id="workspace-chat-input" placeholder="Pergunte sobre o artigo..." rows="1"></textarea>
+                  <button class="btn-send btn-workspace-send" id="workspace-send">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="workspace-rol-wrap hidden" id="workspace-rol-wrap">
               <p class="workspace-rol-content" id="workspace-rol-content"></p>
