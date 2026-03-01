@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta Geral Adulto — Ambient Scribe</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <h1 class="consult-type">Consulta Geral Adulto</h1>
+        <div class="record-controls">
+          <span class="timer" id="header-timer">00:45</span>
+          <button class="btn-record-header" id="record-btn" title="Gravar">
+            <span class="record-dot"></span>
+            <span class="record-label">Gravar</span>
+          </button>
+          <button class="btn-record-pause hidden" id="pause-btn" title="Pausar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            Pausar
+          </button>
+          <button class="btn-record-continue hidden" id="continue-btn" title="Continuar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Continuar
+          </button>
+          <button class="btn-record-stop hidden" id="stop-btn" title="Parar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12"/></svg>
+            Parar
+          </button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="consult-dropdown">
+          <span>Consulta Geral Adulto</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </div>
+        <button class="btn-discard">Descartar</button>
+        <button class="btn-finalize">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3v18M3 12h18"/>
+            <circle cx="12" cy="12" r="9"/>
+          </svg>
+          Finalizar e gerar nota
+        </button>
+      </div>
+    </header>
+
+    <div class="main-grid">
+      <!-- Left: Scribe + Checklist -->
+      <aside class="scribe-pane">
+        <div class="search-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Nome ou número de documento do paciente" class="search-input">
+        </div>
+
+        <div class="checklist-container">
+          <h3 class="checklist-title">Template da consulta</h3>
+          <ul class="checklist">
+            <li class="checklist-item" data-section="chief">
+              <span class="check-icon pending">○</span>
+              <div class="check-content">
+                <strong>Queixa principal:</strong>
+                <span class="text-pending">Cefaleia de início súbito há 3 dias, com sinais de alarme (rigidez de nuca, fotofobia).</span>
+              </div>
+            </li>
+            <li class="checklist-item" data-section="hpi">
+              <span class="check-icon pending">○</span>
+              <div class="check-content">
+                <strong>História da doença atual:</strong>
+                <span class="text-pending">Paciente relata cefaleia em trovoada. Sem trauma. Negou febre inicialmente, mas evoluiu com náuseas. Suspeita de hemorragia subaracnóidea. Solicitado TC de crânio com contraste para melhor caracterização.</span>
+              </div>
+            </li>
+            <li class="checklist-item" data-section="meds">
+              <span class="check-icon pending">○</span>
+              <div class="check-content">
+                <strong>Medicamentos em uso:</strong>
+                <span class="text-pending">Losartana 50mg, AAS 100mg. Nega uso regular de AINEs.</span>
+              </div>
+            </li>
+            <li class="checklist-item" data-section="diseases">
+              <span class="check-icon pending">○</span>
+              <div class="check-content">
+                <strong>Doenças prévias:</strong>
+                <span class="text-pending">Hipertensão, HAC. Ressalta-se: contraindicado RM de crânio — projétil de arma de fogo no ombro direito de acidente no passado, não removido (ferromagnético).</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="notes-section">
+          <label>Notas:</label>
+          <textarea placeholder="Escreva qualquer tipo de nota que tenha relevância na consulta"></textarea>
+        </div>
+
+        <div class="history-section">
+          <label>Histórico médico:</label>
+          <textarea placeholder="Copie e cole o histórico médico do paciente para fazer a consulta de acompanhamento corretamente."></textarea>
+        </div>
+
+        <div class="attach-area">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+          </svg>
+          <span>Arraste ou clique para anexar documentos</span>
+        </div>
+      </aside>
+
+      <!-- Center: Telepatia Intelligence workspace -->
+      <section class="workspace-pane" id="workspace-pane">
+        <div class="workspace-empty" id="workspace-empty">
+          <p class="workspace-empty-title">Área de evidências</p>
+          <p>Explore artigos, diretrizes e referências confiáveis (NEJM, JAMA, ABN) sugeridos pelo chat. Clique em um recurso para abrir e discutir aqui.</p>
+        </div>
+        <div class="workspace-content hidden" id="workspace-content">
+          <div class="workspace-header">
+            <a href="#" class="workspace-title" id="workspace-title">Management and Prevention of Hypersensitivity Reactions to Radiocontrast Media</a>
+            <button class="btn-workspace-close" id="workspace-close">×</button>
+          </div>
+          <div class="ref-icons-bar" id="ref-icons-bar">
+            <span class="ref-label">Referências confiáveis:</span>
+            <a href="https://www.nejm.org/" target="_blank" rel="noopener" class="ref-icon" title="NEJM (EUA)">
+              <span class="ref-badge ref-nejm"><span class="ref-flag">🇺🇸</span> NEJM</span>
+            </a>
+            <a href="https://jamanetwork.com/" target="_blank" rel="noopener" class="ref-icon" title="JAMA (EUA)">
+              <span class="ref-badge ref-jama"><span class="ref-flag">🇺🇸</span> JAMA</span>
+            </a>
+            <a href="https://pubs.rsna.org/" target="_blank" rel="noopener" class="ref-icon" title="Radiology (EUA)">
+              <span class="ref-badge ref-rsna"><span class="ref-flag">🇺🇸</span> RSNA</span>
+            </a>
+            <a href="https://abneuro.org.br/" target="_blank" rel="noopener" class="ref-icon" title="Academia Brasileira de Neurologia (Brasil)">
+              <span class="ref-badge ref-abn"><span class="ref-flag">🇧🇷</span> ABN</span>
+            </a>
+          </div>
+          <div class="grade-bar hidden" id="grade-bar">
+            <button class="btn-grade" id="grade-btn" title="Clique para saber mais">
+              <span class="grade-label">Força da evidência:</span>
+              <span class="grade-value">Moderada</span>
+              <span class="grade-system">(GRADE)</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 16v-4M12 8h.01"/>
+              </svg>
+            </button>
+          </div>
+          <div class="sus-bar hidden" id="sus-bar">
+            <button class="btn-sus" id="sus-btn" title="Informações no contexto do SUS">
+              <span class="sus-flag">🇧🇷</span>
+              <span>Discutir este caso no contexto do SUS</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 15l-6-6-6 6"/>
+              </svg>
+            </button>
+            <div class="sus-content hidden" id="sus-content">
+              <p class="sus-intro">No SUS, o manejo de hipersensibilidade a contraste iodado segue diretrizes do Ministério da Saúde. Correlação com o consenso ACR/AAAAI:</p>
+              <ul class="sus-list">
+                <li><strong>TC de crânio com contraste:</strong> Coberto pelo SUS quando há indicação clínica. Em suspeita de hemorragia subaracnóidea, a TC sem contraste pode ser realizada inicialmente; com contraste é reservada para casos selecionados.</li>
+                <li><strong>Encaminhamento a alergologista:</strong> Disponível na rede de atenção especializada. Algumas regiões têm fila; priorizar pacientes com reação prévia grave.</li>
+                <li><strong>Dessensibilização:</strong> Realizada em centros de referência (ex.: hospitais universitários, centros de alergia). O acesso pode exigir regulamento via central de regulação.</li>
+                <li><strong>Contraste iodado no SUS:</strong> Meios de baixa osmolalidade disponíveis em muitos serviços. Na impossibilidade de dessensibilização, considerar alternativas (ex.: TC sem contraste quando suficiente para o diagnóstico).</li>
+              </ul>
+              <p class="sus-footer">Consulte a Rede de Atenção à Saúde e protocolos da sua região para fluxos específicos.</p>
+            </div>
+          </div>
+          <div class="workspace-body">
+            <div class="workspace-summary-wrap" id="workspace-summary-wrap">
+              <div class="workspace-summary" id="workspace-summary">
+                <p class="summary-explanation" id="summary-explanation"></p>
+                <div class="summary-actions">
+                  <strong>Ações para o médico:</strong>
+                  <ul id="summary-actions-list"></ul>
+                </div>
+                <button class="btn-go-deeper" id="btn-go-deeper">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 15l-6-6-6 6"/>
+                  </svg>
+                  <span class="btn-go-deeper-text">Aprofundar: resultados, estatísticas e metodologia</span>
+                </button>
+                <div class="summary-deeper hidden" id="summary-deeper">
+                  <h5>Metodologia</h5>
+                  <p id="deeper-methodology"></p>
+                  <h5>Resultados e dados estatísticos</h5>
+                  <p id="deeper-results"></p>
+                </div>
+              </div>
+              <div class="workspace-chat">
+              <h4 class="workspace-chat-title">Discuta este artigo</h4>
+              <p class="workspace-chat-hint">Tire dúvidas ou aprofunde sua compreensão com base nas evidências acima.</p>
+              <div class="workspace-chat-messages" id="workspace-chat-messages"></div>
+              <div class="workspace-chat-input-wrap">
+                <textarea id="workspace-chat-input" placeholder="Pergunte sobre o artigo..." rows="1"></textarea>
+                <button class="btn-send btn-workspace-send" id="workspace-send">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            </div>
+            <div class="workspace-rol-wrap hidden" id="workspace-rol-wrap">
+              <p class="workspace-rol-content" id="workspace-rol-content"></p>
+              <a href="https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos" target="_blank" rel="noopener" class="workspace-rol-link">Consultar Rol ANS completo →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Telepatia Intelligence -->
+      <section class="chat-pane">
+        <div class="chat-header">
+          <span>Novo chat</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+          <button class="btn-telepatia-evidence" id="telepatia-evidence-btn" title="Área para discutir alertas e evidências">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+              <path d="M16 13H8"/>
+              <path d="M16 17H8"/>
+              <path d="M10 9H8"/>
+            </svg>
+            Telepatia Evidence
+          </button>
+          <button class="btn-rol-ans" id="rol-ans-btn" title="Verificar Rol ANS">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+            Rol ANS
+          </button>
+          <button class="btn-minimize">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+          <div class="msg msg-assistant" data-msg="allergy">
+            <p>Este paciente tem alergia a contraste iodado. Recomenda-se reconsiderar a prescrição de TC de crânio com contraste.</p>
+          </div>
+        </div>
+
+        <div class="suggestions">
+          <button class="suggestion-btn" data-quick="O que fazer para dessensibilizar este paciente para que eu possa prescrever o TC?">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+            O que fazer para dessensibilizar este paciente para que eu possa prescrever o TC?
+          </button>
+          <button class="suggestion-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+            O que mais seria útil saber do paciente nesta consulta?
+          </button>
+          <button class="suggestion-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+            Quais diagnósticos diferenciais devo considerar primeiro?
+          </button>
+          <button class="suggestion-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+            Calcule a escala de...
+          </button>
+        </div>
+
+        <div class="chat-input-wrap">
+          <textarea id="chat-input" placeholder="Escreva suas perguntas aqui" rows="1"></textarea>
+          <button class="btn-mic" title="Microfone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+          </button>
+          <button class="btn-send" id="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 2L11 13"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="chat-footer">
+          <p class="disclaimer">Telepatia Intelligence é uma IA e pode cometer erros. Por favor, verifique as respostas.</p>
+          <button class="btn-lgpd" id="lgpd-btn" title="Segurança e privacidade">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Conformidade LGPD
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- GRADE Info popover -->
+  <div class="grade-popover hidden" id="grade-popover">
+    <div class="grade-popover-content">
+      <button class="grade-close" id="grade-close">×</button>
+      <h4>GRADE — Força da evidência</h4>
+      <p>O método GRADE (Grading of Recommendations Assessment, Development and Evaluation) classifica a qualidade da evidência e a força das recomendações.</p>
+      <ul>
+        <li><strong>Alta:</strong> Confiança elevada no efeito estimado — a evidência provavelmente não mudará.</li>
+        <li><strong>Moderada:</strong> Confiança moderada — o efeito real pode ser diferente do estimado.</li>
+        <li><strong>Baixa:</strong> Confiança limitada — o efeito real pode ser substancialmente diferente.</li>
+        <li><strong>Muito baixa:</strong> Muito pouca confiança no efeito estimado.</li>
+      </ul>
+      <p class="grade-footer">Consensos e diretrizes de sociedades geralmente têm evidência <strong>moderada</strong> a <strong>alta</strong>.</p>
+    </div>
+  </div>
+
+  <!-- LGPD Info popover -->
+  <div class="lgpd-popover hidden" id="lgpd-popover">
+    <div class="lgpd-popover-content">
+      <button class="lgpd-close" id="lgpd-close">×</button>
+      <h4>Seus dados em conformidade com a LGPD</h4>
+      <p>Garantimos a segurança e privacidade dos dados de pacientes e profissionais conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
+      <ul>
+        <li><strong>Criptografia:</strong> dados sensíveis criptografados em trânsito e em repouso</li>
+        <li><strong>Controle de acesso:</strong> apenas profissionais autorizados acessam informações da consulta</li>
+        <li><strong>Minimização:</strong> coletamos apenas o necessário para o atendimento</li>
+        <li><strong>Transparência:</strong> você tem direito a saber como seus dados são tratados</li>
+      </ul>
+      <p class="lgpd-footer">Política de Privacidade e Termos de Uso disponíveis em sua conta.</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
