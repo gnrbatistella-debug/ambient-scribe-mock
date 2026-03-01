@@ -117,12 +117,23 @@
       <!-- Center: Telepatia Intelligence workspace -->
       <section class="workspace-pane" id="workspace-pane">
         <div class="workspace-empty" id="workspace-empty">
-          <p class="workspace-empty-title">Área de evidências</p>
-          <p>Explore artigos, diretrizes e referências confiáveis (NEJM, JAMA, ABN) sugeridos pelo chat. Clique em um recurso para abrir e discutir aqui.</p>
+          <p class="workspace-empty-title">Telepatia Evidence</p>
+          <p>Explore artigos, diretrizes e referências confiáveis (NEJM, JAMA, ABN) sugeridos pelo chat.</p>
+          <button class="btn-new-evidence" id="btn-new-evidence">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            Nova pesquisa de evidências
+          </button>
         </div>
         <div class="workspace-content hidden" id="workspace-content">
           <div class="workspace-header">
             <a href="#" class="workspace-title" id="workspace-title">Management and Prevention of Hypersensitivity Reactions to Radiocontrast Media</a>
+            <button class="btn-workspace-new" id="workspace-new" title="Nova pesquisa">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </button>
             <button class="btn-workspace-close" id="workspace-close">×</button>
           </div>
           <div class="ref-icons-bar" id="ref-icons-bar">
@@ -209,6 +220,50 @@
               <p class="workspace-rol-content" id="workspace-rol-content"></p>
               <a href="https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos" target="_blank" rel="noopener" class="workspace-rol-link">Consultar Rol ANS completo →</a>
             </div>
+            <!-- Blank evidence workspace with chat -->
+            <div class="workspace-blank-wrap hidden" id="workspace-blank-wrap">
+              <div class="workspace-blank-messages" id="workspace-blank-messages"></div>
+              <div class="workspace-blank-suggestions">
+                <button class="ws-suggestion-btn" data-ws-quick="Quais são os sinais de alerta (red flags) para cefaleia?">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 8v4M12 16h.01"/>
+                  </svg>
+                  Sinais de alerta para cefaleia
+                </button>
+                <a href="https://radiopaedia.org/articles/ct-head-an-approach" target="_blank" rel="noopener" class="ws-suggestion-btn ws-suggestion-link">
+                  <img src="https://radiopaedia.org/favicon.ico" width="16" height="16" alt="Radiopaedia" class="ws-suggestion-favicon">
+                  Como avaliar uma TC de crânio — Radiopaedia
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15 3 21 3 21 9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </a>
+                <button class="ws-suggestion-btn" data-ws-quick="Quais exames de imagem são indicados na suspeita de hemorragia subaracnóidea?">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 8v4M12 16h.01"/>
+                  </svg>
+                  Exames de imagem para HSA
+                </button>
+                <button class="ws-suggestion-btn" data-ws-quick="Qual o protocolo de pré-medicação para contraste iodado em pacientes alérgicos?">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M12 8v4M12 16h.01"/>
+                  </svg>
+                  Protocolo de pré-medicação para contraste
+                </button>
+              </div>
+              <div class="workspace-blank-input-wrap">
+                <textarea id="workspace-blank-input" placeholder="Pesquise evidências, diretrizes ou pergunte sobre o caso..." rows="1"></textarea>
+                <button class="btn-send" id="workspace-blank-send">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -216,20 +271,10 @@
       <!-- Right: Telepatia Intelligence -->
       <section class="chat-pane">
         <div class="chat-header">
-          <span>Novo chat</span>
+          <span>Telepatia Intelligence</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M6 9l6 6 6-6"/>
           </svg>
-          <button class="btn-telepatia-evidence" id="telepatia-evidence-btn" title="Área para discutir alertas e evidências">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <path d="M14 2v6h6"/>
-              <path d="M16 13H8"/>
-              <path d="M16 17H8"/>
-              <path d="M10 9H8"/>
-            </svg>
-            Telepatia Evidence
-          </button>
           <button class="btn-rol-ans" id="rol-ans-btn" title="Verificar Rol ANS">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
@@ -243,19 +288,182 @@
           </button>
         </div>
 
+        <!-- Rol ANS view (inside chat pane) -->
+        <div class="chat-rol-view hidden" id="chat-rol-view">
+          <div class="chat-rol-header">
+            <button class="btn-back-to-chat" id="btn-back-to-chat">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5"/>
+                <path d="M12 19l-7-7 7-7"/>
+              </svg>
+              Voltar ao chat
+            </button>
+          </div>
+          <div class="chat-rol-body">
+            <h3 class="chat-rol-title">Rol ANS — TC de crânio com contraste</h3>
+            <p class="chat-rol-content" id="chat-rol-content"></p>
+            <a href="https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos" target="_blank" rel="noopener" class="workspace-rol-link">Consultar Rol ANS completo →</a>
+          </div>
+        </div>
+
+        <!-- HAS-BLED Calculator view -->
+        <div class="chat-calculator-view hidden" id="chat-calculator-view">
+          <div class="calc-header">
+            <button class="btn-back-to-chat" id="btn-back-from-calc">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5"/>
+                <path d="M12 19l-7-7 7-7"/>
+              </svg>
+              Voltar ao chat
+            </button>
+          </div>
+          <div class="calc-body">
+            <div class="calc-title-row">
+              <div class="calc-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="4" y="2" width="16" height="20" rx="2"/>
+                  <line x1="8" y1="6" x2="16" y2="6"/>
+                  <line x1="8" y1="10" x2="16" y2="10"/>
+                  <line x1="8" y1="14" x2="12" y2="14"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="calc-title">Escala HAS-BLED</h3>
+                <p class="calc-subtitle">Risco de sangramento em pacientes com fibrilação atrial em uso de anticoagulantes</p>
+              </div>
+            </div>
+
+            <div class="calc-items">
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">H</span>
+                  <div>
+                    <strong>Hipertensão</strong>
+                    <span class="calc-desc">PAS &gt; 160 mmHg</span>
+                  </div>
+                  <span class="calc-pts">+1</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">A</span>
+                  <div>
+                    <strong>Alteração renal/hepática</strong>
+                    <span class="calc-desc">Diálise, transplante, Cr &gt; 2,26 ou cirrose, bilirrubina &gt; 2x, AST/ALT &gt; 3x</span>
+                  </div>
+                  <span class="calc-pts">+1 cada</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">S</span>
+                  <div>
+                    <strong>AVC (Stroke)</strong>
+                    <span class="calc-desc">História prévia de AVC</span>
+                  </div>
+                  <span class="calc-pts">+1</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">B</span>
+                  <div>
+                    <strong>Sangramento (Bleeding)</strong>
+                    <span class="calc-desc">História ou predisposição a sangramento</span>
+                  </div>
+                  <span class="calc-pts">+1</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">L</span>
+                  <div>
+                    <strong>INR lábil (Labile)</strong>
+                    <span class="calc-desc">INR instável, TTR &lt; 60%</span>
+                  </div>
+                  <span class="calc-pts">+1</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">E</span>
+                  <div>
+                    <strong>Idoso (Elderly)</strong>
+                    <span class="calc-desc">Idade &gt; 65 anos</span>
+                  </div>
+                  <span class="calc-pts">+1</span>
+                </div>
+              </label>
+              <label class="calc-item">
+                <input type="checkbox" class="calc-check" data-points="1">
+                <div class="calc-item-content">
+                  <span class="calc-letter">D</span>
+                  <div>
+                    <strong>Drogas/Álcool</strong>
+                    <span class="calc-desc">Antiplaquetários, AINEs ou abuso de álcool</span>
+                  </div>
+                  <span class="calc-pts">+1 cada</span>
+                </div>
+              </label>
+            </div>
+
+            <div class="calc-result" id="calc-result">
+              <div class="calc-score-row">
+                <span class="calc-score-label">Pontuação:</span>
+                <span class="calc-score-value" id="calc-score">0</span>
+                <span class="calc-score-max">/ 9</span>
+              </div>
+              <div class="calc-risk" id="calc-risk">
+                <span class="calc-risk-dot calc-risk-low"></span>
+                <span>Baixo risco de sangramento</span>
+              </div>
+              <p class="calc-interpretation" id="calc-interpretation">Pontuação 0-2: risco baixo. Anticoagulação pode ser mantida com monitoramento habitual.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat view -->
+        <div class="chat-view" id="chat-view">
         <div class="chat-messages" id="chat-messages">
-          <div class="msg msg-assistant" data-msg="allergy">
-            <p>Este paciente tem alergia a contraste iodado. Recomenda-se reconsiderar a prescrição de TC de crânio com contraste.</p>
+          <div class="msg msg-assistant msg-alert" data-msg="allergy">
+            <div class="alert-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="alert-body">
+              <p class="alert-title">Alerta: Alergia a contraste iodado</p>
+              <p class="alert-desc">Este paciente tem alergia a contraste iodado. Recomenda-se reconsiderar a prescrição de TC de crânio com contraste.</p>
+              <button class="btn-alert-action" id="btn-alert-evidence">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <path d="M14 2v6h6"/>
+                </svg>
+                Ver evidências e conduta recomendada
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14"/>
+                  <path d="M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="suggestions">
-          <button class="suggestion-btn" data-quick="O que fazer para dessensibilizar este paciente para que eu possa prescrever o TC?">
+          <button class="suggestion-btn" id="btn-hasbled">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 3v18M3 12h18"/>
-              <circle cx="12" cy="12" r="9"/>
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
             </svg>
-            O que fazer para dessensibilizar este paciente para que eu possa prescrever o TC?
+            Calcule a escala HAS-BLED
           </button>
           <button class="suggestion-btn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -297,6 +505,7 @@
             </svg>
           </button>
         </div>
+        </div><!-- /chat-view -->
         <div class="chat-footer">
           <p class="disclaimer">Telepatia Intelligence é uma IA e pode cometer erros. Por favor, verifique as respostas.</p>
           <button class="btn-lgpd" id="lgpd-btn" title="Segurança e privacidade">

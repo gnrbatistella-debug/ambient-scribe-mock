@@ -197,13 +197,12 @@
     }
   }
 
-  // Center workspace (Telepatia extension)
+  // Center workspace (Telepatia Evidence)
   const workspaceEmpty = document.getElementById('workspace-empty');
   const workspaceContent = document.getElementById('workspace-content');
   const workspaceSummary = document.getElementById('workspace-summary');
   const workspaceSummaryWrap = document.getElementById('workspace-summary-wrap');
   const workspaceRolWrap = document.getElementById('workspace-rol-wrap');
-  const workspaceRolContent = document.getElementById('workspace-rol-content');
   const workspaceTitle = document.getElementById('workspace-title');
   const refIconsBar = document.getElementById('ref-icons-bar');
   const gradeBar = document.getElementById('grade-bar');
@@ -211,10 +210,11 @@
   const susBtn = document.getElementById('sus-btn');
   const susContent = document.getElementById('sus-content');
   const workspaceClose = document.getElementById('workspace-close');
-  const telepatiaEvidenceBtn = document.getElementById('telepatia-evidence-btn');
 
-  let lastEvidenceView = 'empty'; // 'empty' | 'article'
-  let currentWorkspaceView = 'empty'; // 'empty' | 'article' | 'rol'
+  // Chat pane views
+  const chatView = document.getElementById('chat-view');
+  const chatRolView = document.getElementById('chat-rol-view');
+  const chatRolContent = document.getElementById('chat-rol-content');
 
   const rolContent = `O <strong>TC de crânio com contraste</strong> está incluído no Rol de Procedimentos e Eventos em Saúde da ANS (cobertura obrigatória para planos que incluem exames de imagem). Para planos Bradesco Saúde, a tomografia de crânio com contraste é cobertura assistencial obrigatória quando há indicação clínica. Consulte as diretrizes de utilização (Anexo II) para critérios específicos. Recomenda-se documentar a suspeita diagnóstica (ex.: hemorragia subaracnóidea) para fins de autorização.`;
 
@@ -260,8 +260,6 @@
   });
 
   function openArticleInWorkspace() {
-    lastEvidenceView = 'article';
-    currentWorkspaceView = 'article';
     workspaceEmpty.classList.add('hidden');
     workspaceContent.classList.remove('hidden');
     workspaceTitle.textContent = 'Management and Prevention of Hypersensitivity Reactions to Radiocontrast Media';
@@ -269,65 +267,143 @@
     workspaceTitle.target = '_blank';
     workspaceSummaryWrap.classList.remove('hidden');
     workspaceRolWrap.classList.add('hidden');
+    document.getElementById('workspace-blank-wrap')?.classList.add('hidden');
     refIconsBar.classList.remove('hidden');
     gradeBar.classList.remove('hidden');
     susBar?.classList.remove('hidden');
     susContent?.classList.add('hidden');
     susBtn?.classList.remove('expanded');
     renderArticleSummary(true);
-    telepatiaEvidenceBtn?.classList.add('active');
-  }
-
-  function openRolInWorkspace() {
-    currentWorkspaceView = 'rol';
-    workspaceEmpty.classList.add('hidden');
-    workspaceContent.classList.remove('hidden');
-    workspaceTitle.textContent = 'Rol ANS — TC de crânio com contraste';
-    workspaceTitle.href = 'https://www.gov.br/ans/pt-br/acesso-a-informacao/participacao-da-sociedade/atualizacao-do-rol-de-procedimentos';
-    workspaceTitle.target = '_blank';
-    workspaceSummaryWrap.classList.add('hidden');
-    workspaceRolWrap.classList.remove('hidden');
-    refIconsBar.classList.add('hidden');
-    gradeBar.classList.add('hidden');
-    susBar?.classList.add('hidden');
-    workspaceRolContent.innerHTML = rolContent;
-    telepatiaEvidenceBtn?.classList.remove('active');
-  }
-
-  function openTelepatiaEvidence() {
-    currentWorkspaceView = lastEvidenceView === 'article' ? 'article' : 'empty';
-    if (lastEvidenceView === 'article') {
-      workspaceEmpty.classList.add('hidden');
-      workspaceContent.classList.remove('hidden');
-      workspaceTitle.textContent = 'Management and Prevention of Hypersensitivity Reactions to Radiocontrast Media';
-      workspaceTitle.href = 'https://pubs.rsna.org/doi/10.1148/radiol.240100';
-      workspaceTitle.target = '_blank';
-      workspaceSummaryWrap.classList.remove('hidden');
-      workspaceRolWrap.classList.add('hidden');
-      refIconsBar.classList.remove('hidden');
-      gradeBar.classList.remove('hidden');
-      susBar?.classList.remove('hidden');
-      susContent?.classList.add('hidden');
-      susBtn?.classList.remove('expanded');
-      renderArticleSummary(false);
-      telepatiaEvidenceBtn?.classList.add('active');
-    } else {
-      workspaceContent.classList.add('hidden');
-      workspaceEmpty.classList.remove('hidden');
-      telepatiaEvidenceBtn?.classList.remove('active');
-    }
   }
 
   function closeWorkspace() {
-    currentWorkspaceView = 'empty';
     workspaceContent.classList.add('hidden');
     workspaceEmpty.classList.remove('hidden');
-    telepatiaEvidenceBtn?.classList.remove('active');
   }
 
+  function openBlankWorkspace() {
+    workspaceEmpty.classList.add('hidden');
+    workspaceContent.classList.remove('hidden');
+    workspaceTitle.textContent = 'Nova pesquisa';
+    workspaceTitle.href = '#';
+    workspaceSummaryWrap.classList.add('hidden');
+    workspaceRolWrap.classList.add('hidden');
+    document.getElementById('workspace-blank-wrap')?.classList.remove('hidden');
+    refIconsBar.classList.remove('hidden');
+    gradeBar.classList.add('hidden');
+    susBar?.classList.add('hidden');
+  }
+
+  // Workspace "new" button → go back to blank evidence
+  document.getElementById('workspace-new')?.addEventListener('click', openBlankWorkspace);
+
+  // Rol ANS — now opens inside chat pane
+  function openRolInChat() {
+    chatRolContent.innerHTML = rolContent;
+    chatView.classList.add('hidden');
+    chatRolView.classList.remove('hidden');
+    document.getElementById('chat-calculator-view')?.classList.add('hidden');
+  }
+
+  function backToChat() {
+    chatRolView.classList.add('hidden');
+    document.getElementById('chat-calculator-view')?.classList.add('hidden');
+    chatView.classList.remove('hidden');
+  }
+
+  // HAS-BLED Calculator
+  const calcView = document.getElementById('chat-calculator-view');
+  const calcScoreEl = document.getElementById('calc-score');
+  const calcRiskEl = document.getElementById('calc-risk');
+  const calcInterpEl = document.getElementById('calc-interpretation');
+
+  function openHasbled() {
+    chatView.classList.add('hidden');
+    chatRolView.classList.add('hidden');
+    calcView?.classList.remove('hidden');
+  }
+
+  function updateCalcScore() {
+    const checks = document.querySelectorAll('.calc-check');
+    let score = 0;
+    checks.forEach(c => { if (c.checked) score += parseInt(c.dataset.points || '1'); });
+
+    calcScoreEl.textContent = score;
+    calcScoreEl.className = 'calc-score-value';
+
+    if (score <= 2) {
+      calcScoreEl.classList.add('risk-low');
+      calcRiskEl.innerHTML = '<span class="calc-risk-dot calc-risk-low"></span><span>Baixo risco de sangramento</span>';
+      calcInterpEl.textContent = 'Pontuação 0-2: risco baixo. Anticoagulação pode ser mantida com monitoramento habitual.';
+    } else if (score === 3) {
+      calcScoreEl.classList.add('risk-moderate');
+      calcRiskEl.innerHTML = '<span class="calc-risk-dot calc-risk-moderate"></span><span>Risco moderado de sangramento</span>';
+      calcInterpEl.textContent = 'Pontuação 3: risco moderado. Considerar revisão de fatores de risco modificáveis. Monitoramento mais frequente recomendado.';
+    } else {
+      calcScoreEl.classList.add('risk-high');
+      calcRiskEl.innerHTML = '<span class="calc-risk-dot calc-risk-high"></span><span>Alto risco de sangramento</span>';
+      calcInterpEl.textContent = 'Pontuação ≥ 4: alto risco. Reavaliar indicação de anticoagulação. Corrigir fatores modificáveis (PA, INR, drogas). Considerar alternativas ou dose reduzida.';
+    }
+  }
+
+  document.querySelectorAll('.calc-check').forEach(c => {
+    c.addEventListener('change', updateCalcScore);
+  });
+
+  document.getElementById('btn-hasbled')?.addEventListener('click', openHasbled);
+  document.getElementById('btn-back-from-calc')?.addEventListener('click', backToChat);
+
   workspaceClose.addEventListener('click', closeWorkspace);
-  document.getElementById('rol-ans-btn')?.addEventListener('click', openRolInWorkspace);
-  telepatiaEvidenceBtn?.addEventListener('click', openTelepatiaEvidence);
+  document.getElementById('rol-ans-btn')?.addEventListener('click', openRolInChat);
+  document.getElementById('btn-back-to-chat')?.addEventListener('click', backToChat);
+
+  // Blank evidence workspace elements
+  const workspaceBlankWrap = document.getElementById('workspace-blank-wrap');
+  const workspaceBlankMessages = document.getElementById('workspace-blank-messages');
+  const workspaceBlankInput = document.getElementById('workspace-blank-input');
+  const workspaceBlankSend = document.getElementById('workspace-blank-send');
+
+  // New evidence button in center pane
+  document.getElementById('btn-new-evidence')?.addEventListener('click', openBlankWorkspace);
+
+  // Blank workspace chat
+  function appendBlankMsg(text, isUser) {
+    const div = document.createElement('div');
+    div.className = 'ws-blank-msg ' + (isUser ? 'ws-blank-msg-user' : 'ws-blank-msg-assistant');
+    div.textContent = text;
+    workspaceBlankMessages.appendChild(div);
+    workspaceBlankMessages.scrollTop = workspaceBlankMessages.scrollHeight;
+  }
+
+  function handleBlankSend() {
+    const text = workspaceBlankInput.value.trim();
+    if (!text) return;
+    appendBlankMsg(text, true);
+    workspaceBlankInput.value = '';
+    // Hide suggestions after first message
+    const suggestionsEl = document.querySelector('.workspace-blank-suggestions');
+    if (suggestionsEl) suggestionsEl.style.display = 'none';
+    // Simulated response
+    setTimeout(() => {
+      appendBlankMsg('Pesquisando evidências relevantes para sua pergunta. Um momento...', false);
+    }, 500);
+  }
+
+  workspaceBlankSend?.addEventListener('click', handleBlankSend);
+  workspaceBlankInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleBlankSend();
+    }
+  });
+
+  // Blank workspace suggestion buttons
+  document.querySelectorAll('.ws-suggestion-btn[data-ws-quick]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      workspaceBlankInput.value = btn.dataset.wsQuick;
+      handleBlankSend();
+    });
+  });
 
   // Workspace chat (discuss article)
   const workspaceChatInput = document.getElementById('workspace-chat-input');
@@ -373,6 +449,11 @@
 
   gradeBtn?.addEventListener('click', () => gradePopover?.classList.toggle('hidden'));
   gradeClose?.addEventListener('click', () => gradePopover?.classList.add('hidden'));
+
+  // CDSS alert action button → open evidence
+  document.getElementById('btn-alert-evidence')?.addEventListener('click', () => {
+    openArticleInWorkspace();
+  });
 
   // Quick-send suggestion buttons
   document.querySelectorAll('.suggestion-btn[data-quick]').forEach((btn) => {
